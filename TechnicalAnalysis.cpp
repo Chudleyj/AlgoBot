@@ -27,7 +27,7 @@ void TechnicalAnalysis::calcRSI(const JSONdata HistoricalData){
 
   for(int i = 0; i < avgGain.size(); i++){
       RS.push_back(avgGain[i]/avgLoss[i]);
-      avgLoss[i] == 0 ? RSI.push_back(100) : RSI.push_back(100 - (100/(1+RS[i])));
+      RSI.push_back(avgLoss[i] == 0 ? 100 : (100 - (100/(1+RS[i])));
   }
 }
 //Calculates stochRSI of a given stock

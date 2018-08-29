@@ -5,45 +5,46 @@
 #include <curl/curl.h>
 #include <locale> //std::locale, std::isdigit
 #include <string>
+#include <cassert>
 #include <iostream>
 
 #define IEX_ENDPOINT "https://api.iextrading.com/1.0"
 
 namespace IEX{
-  void sendGetRequest(Json::Value &data, std::string url);
+  void sendGetRequest(Json::Value &data, const std::string url);
   namespace stocks{
-    Json::Value batch(std::string symbol);
-    Json::Value book(std::string symbol);
-    Json::Value chart(std::string symbol);
-    Json::Value chartRange(std::string symbol, std::string range);
-    Json::Value chartDate(std::string symbol, std::string date);
-    Json::Value chartDynamic(std::string symbol);
-    Json::Value company(std::string symbol);
+    Json::Value batch(const std::string &);
+    Json::Value book(const std::string &);
+    Json::Value chart(const std::string &);
+    Json::Value chartRange(const std::string &, const std::string &);
+    Json::Value chartDate(const std::string &, const std::string &);
+    Json::Value chartDynamic(const std::string &);
+    Json::Value company(const std::string &);
     Json::Value crypto();
-    Json::Value delayedQuote(std::string symbol);
-    Json::Value dividends(std::string symbol, std::string range);
-    Json::Value earnings(std::string symbol);
+    Json::Value delayedQuote(const std::string &);
+    Json::Value dividends(const std::string &, const std::string &);
+    Json::Value earnings(const std::string &);
     Json::Value earningsToday();
-    Json::Value effectiveSpread(std::string symbol);
-    Json::Value financials(std::string symbol);
+    Json::Value effectiveSpread(const std::string &);
+    Json::Value financials(const std::string &);
     Json::Value upcomingIPOS();
     Json::Value todayIPOS();
-    Json::Value stats(std::string symbol);
-    Json::Value largestTrades(std::string symbol);
-    Json::Value list(std::string listType);
-    Json::Value logo(std::string symbol);
-    Json::Value news(std::string symbol, int last = 0);
-    Json::Value OHLC(std::string symbol);
-    Json::Value peers(std::string symbol);
-    Json::Value previous(std::string symbol);
-    Json::Value price(std::string symbol);
-    Json::Value quote(std::string symbol, bool displayPercent = false);
-    Json::Value relevant(std::string symbol);
+    Json::Value stats(const std::string &);
+    Json::Value largestTrades(const std::string &);
+    Json::Value list(const std::string &);
+    Json::Value logo(const std::string &);
+    Json::Value news(const std::string &, int last = 0);
+    Json::Value OHLC(const std::string &);
+    Json::Value peers(const std::string &);
+    Json::Value previous(const std::string &);
+    Json::Value price(const std::string &);
+    Json::Value quote(const std::string &, bool displayPercent = false);
+    Json::Value relevant(const std::string &);
     Json::Value sectorPerformance();
-    Json::Value splits(std::string symbol, std::string range);
-    Json::Value relevant(std::string symbol);
-    Json::Value timeSeries(std::string symbol);
-    Json::Value VolumeByVenue(std::string symbol);
+    Json::Value splits(const std::string &, const std::string &);
+    Json::Value relevant(const std::string &);
+    Json::Value timeSeries(const std::string &);
+    Json::Value VolumeByVenue(const std::string &);
   }
 
   namespace refData{

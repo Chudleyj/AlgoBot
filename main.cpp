@@ -1,6 +1,6 @@
 #include "main.h"
 
-auto main() -> int
+int main()
 {
   JSONdata formattedHistoricalData; //Vec to hold JSONdata structs
   TechnicalAnalysis TIobj;

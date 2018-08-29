@@ -39,12 +39,27 @@ void IEX::sendGetRequest(Json::Value &jsonData, const std::string url){
   Json::Reader jsonReader;
   jsonReader.parse(*httpData, jsonData); //TODO error handle
 }
-
-Json::Value IEX::stocks::batch(std::string symbol){
+/*
+// .../market
+{
+  "AAPL" : {
+    "quote": {...},
+    "news": [...],
+    "chart": [...]
+  },
+  "FB" : {
+    "quote": {...},
+    "news": [...],
+    "chart": [...]
+  },
+} 
+*/
+Json::Value IEX::stocks::batch(const std::string &symbol){
   Json::Value jsonData;
   std::string url(IEX_ENDPOINT);
   url+="/stock/"+symbol+"/batch";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -57,11 +72,12 @@ Json::Value IEX::stocks::batch(std::string symbol){
   "systemEvent": {...},
 }
 */
-Json::Value IEX::stocks::book(std::string symbol){
+Json::Value IEX::stocks::book(const std::string &symbol){
   Json::Value jsonData;
   std::string url(IEX_ENDPOINT);
   url+="/stock/"+symbol+"/book";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -94,17 +110,18 @@ Json::Value IEX::stocks::book(std::string symbol){
     } // , { ... }
 ]
 */
-Json::Value IEX::stocks::chart(std::string symbol){
+Json::Value IEX::stocks::chart(const std::string &symbol){
   Json::Value jsonData;
   std::string url(IEX_ENDPOINT);
   url+="/stock/"+symbol+"/chart";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
 //Same as chart function, except it takes a range in.
 //Range must be: 5y, 2y, 1y, ytd, 6m, 3m, 1m, 1d
-Json::Value IEX::stocks::chartRange(std::string symbol, std::string range){
+Json::Value IEX::stocks::chartRange(const std::string symbol, const std::string range){
   Json::Value jsonData;
   if(range == "5y" || range == "2y" || range == "1y" || range == "ytd" || range == "6m" || range == "3m" || range == "1m" || range == "1d"){
     std::string url(IEX_ENDPOINT);
@@ -115,30 +132,34 @@ Json::Value IEX::stocks::chartRange(std::string symbol, std::string range){
     std::cout << std::endl << "Incorrect 'range' input in function chartRange. Exiting." << std::endl;
     exit(1);
   }
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
 //Specific date entry for chart, YYYYMMDD format, 30 trailing calander days
-Json::Value IEX::stocks::chartDate(std::string symbol, std::string date){
+Json::Value IEX::stocks::chartDate(const std::string &symbol, const std::string &date){
   Json::Value jsonData;
   if(date.size() == 8){
     std::string url(IEX_ENDPOINT);
     url+="/stock/"+symbol+"/chart/date/"+date;
     IEX::sendGetRequest(jsonData, url);
+   
   }
   else{
     std::cout << std::endl << "Incorrect 'date' input in function chartDate. Exiting." << std::endl;
     exit(1);
   }
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
 //Dynamic chart. See offical API docs.
-Json::Value IEX::stocks::chartDynamic(std::string symbol){
+Json::Value IEX::stocks::chartDynamic(const std::string &symbol){
   Json::Value jsonData;
   std::string url(IEX_ENDPOINT);
   url += "/stock/"+symbol+"/chart/dynamic";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -155,11 +176,12 @@ GET /stock/{symbol}/company
   "issueType": "cs",
   "sector": "Technology",
 }*/
-Json::Value IEX::stocks::company(std::string symbol){
+Json::Value IEX::stocks::company(const std::string &symbol){
   Json::Value jsonData;
   std::string url(IEX_ENDPOINT);
   url += "/stock/"+symbol+"/company";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -172,11 +194,12 @@ GET /stock/{symbol}/delayed-quote
   "delayedPriceTime": 1498762739791,
   "processedTime": 1498763640156
 }*/
-Json::Value IEX::stocks::delayedQuote(std::string symbol){
+Json::Value IEX::stocks::delayedQuote(const std::string &symbol){
   Json::Value jsonData;
   std::string url(IEX_ENDPOINT);
   url += "/stock/"+symbol+"/delayed-quote";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -194,7 +217,7 @@ GET /stock/{symbol}/dividends/{range}
     } // , { ... }
 ]
 REQUIRES a range: 5y,2y,1y,ytd,6m,3m,1m */
-Json::Value IEX::stocks::dividends(std::string symbol, std::string range){
+Json::Value IEX::stocks::dividends(const std::string &symbol, const std::string &range){
   Json::Value jsonData;
   if(range == "5y" || range == "2y" || range == "1y" || range == "ytd" || range == "6m" || range == "3m" || range == "1m"){
     std::string url(IEX_ENDPOINT);
@@ -205,6 +228,7 @@ Json::Value IEX::stocks::dividends(std::string symbol, std::string range){
     std::cout << std::endl << "Incorrect 'range' input in function dividends. Exiting." << std::endl;
     exit(1);
   }
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -244,11 +268,12 @@ Json::Value IEX::stocks::dividends(std::string symbol, std::string range){
     },
   ]
 }*/
-Json::Value IEX::stocks::earnings(std::string symbol){
+Json::Value IEX::stocks::earnings(const std::string &symbol){
   Json::Value jsonData;
   std::string url(IEX_ENDPOINT);
   url += "/stock/"+symbol+"/earnings";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -279,11 +304,12 @@ Json::Value IEX::stocks::earnings(std::string symbol){
     "priceImprovement": 0.003949427
   }
 ]*/
-Json::Value IEX::stocks::effectiveSpread(std::string symbol){
+Json::Value IEX::stocks::effectiveSpread(const std::string &symbol){
   Json::Value jsonData;
   std::string url(IEX_ENDPOINT);
   url += "/stock/"+symbol+"/effective-spread";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -317,11 +343,12 @@ The above example will return JSON with the following keys
     } // , { ... }
   ]
 }*/
-Json::Value IEX::stocks::financials(std::string symbol){
+Json::Value IEX::stocks::financials(const std::string &symbol){
   Json::Value jsonData;
   std::string url(IEX_ENDPOINT);
   url += "/stock/"+symbol+"/financials";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -377,11 +404,12 @@ Json::Value IEX::stocks::financials(std::string symbol){
   "month1ChangePercent": 0.009668596145283263,
   "day5ChangePercent": -0.005762605699968781
 }*/
-Json::Value IEX::stocks::stats(std::string symbol){
+Json::Value IEX::stocks::stats(const std::string &symbol){
   Json::Value jsonData;
   std::string url(IEX_ENDPOINT);
   url += "/stock/"+symbol+"/stats";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -397,11 +425,12 @@ Json::Value IEX::stocks::stats(std::string symbol){
   },
   ...
 ] */
-Json::Value IEX::stocks::largestTrades(std::string symbol){
+Json::Value IEX::stocks::largestTrades(const std::string &symbol){
   Json::Value jsonData;
   std::string url(IEX_ENDPOINT);
   url += "/stock/"+symbol+"/largest-trades";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -441,7 +470,7 @@ Json::Value IEX::stocks::largestTrades(std::string symbol){
   } // , { ... }
 ]
 LISTTYPE REQUIRED: mostactive, gainers, losers, iexvolume, or iexmarketpercent*/
-Json::Value IEX::stocks::list(std::string listType){
+Json::Value IEX::stocks::list(const std::string &listType){
   Json::Value jsonData;
   if(listType == "mostactive" || listType == "gainers" || listType == "losers" || listType == "iexvolume" || listType == "iexmarketpercent"){
     std::string url(IEX_ENDPOINT);
@@ -452,6 +481,7 @@ Json::Value IEX::stocks::list(std::string listType){
     std::cout << std::endl << "Incorrect 'listType' input in function list. Exiting." << std::endl;
     exit(1);
   }
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -460,11 +490,12 @@ GET /stock/{symbol}/logo
 {
   "url": "https://storage.googleapis.com/iex/api/logos/AAPL.png"
 }*/
-Json::Value IEX::stocks::logo(std::string symbol){
+Json::Value IEX::stocks::logo(const std::string &symbol){
   Json::Value jsonData;
   std::string url(IEX_ENDPOINT);
   url += "/stock/"+symbol+"/logo";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -484,11 +515,12 @@ GET /stock/{symbol}/news/last/{last}
 ]
 EITHER PASS A SYMBOL OR A SYMOL AND A NUMBER FOR LAST X ARTICLES (SEE OFFICAL DOCS)
 OR PASS MARKET AS SYMBOL FOR MARKETWIDE NEWS*/
-Json::Value IEX::stocks::news(std::string symbol, int last){
+Json::Value IEX::stocks::news(const std::string &symbol, int last){
   Json::Value jsonData;
   std::string url(IEX_ENDPOINT);
   last == 0 ? url += "/stock/"+symbol+"/news" : url += "/stock/"+symbol+"/news/last/"+std::to_string(last);
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -506,11 +538,12 @@ Json::Value IEX::stocks::news(std::string symbol, int last){
   "low": 153.25
 }
 Can take in a specific symbol OR market as symbol */
-Json::Value IEX::stocks::OHLC(std::string symbol){
+Json::Value IEX::stocks::OHLC(const std::string &symbol){
   Json::Value jsonData;
   std::string url(IEX_ENDPOINT);
   url += "/stock/"+symbol+"/ohlc";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -525,11 +558,12 @@ GET /stock/{symbol}/peers
     "GOOGL",
     "XLK"
 ] */
-Json::Value IEX::stocks::peers(std::string symbol){
+Json::Value IEX::stocks::peers(const std::string &symbol){
   Json::Value jsonData;
   std::string url(IEX_ENDPOINT);
   url += "/stock/"+symbol+"/peers";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -549,20 +583,22 @@ GET /stock/{symbol}/previous
   "vwap": 158.9944
 }
 Takes symbol or market as symbol */
-Json::Value IEX::stocks::previous(std::string symbol){
+Json::Value IEX::stocks::previous(const std::string &symbol){
   Json::Value jsonData;
   std::string url(IEX_ENDPOINT);
   url += "/stock/"+symbol+"/previous";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
 // GET /stock/{symbol}/price
-Json::Value IEX::stocks::price(std::string symbol){
+Json::Value IEX::stocks::price(const std::string &symbol){
   Json::Value jsonData;
   std::string url(IEX_ENDPOINT);
   url += "/stock/"+symbol+"/price";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -611,15 +647,12 @@ GET /stock/{symbol}/quote
   "ytdChange": 0.3665,
 }
 OPTIONAL VALUE TO DISPLAY PERCENT, SEE OFFICAL API */
-Json::Value IEX::stocks::quote(std::string symbol, bool displayPercent){
+Json::Value IEX::stocks::quote(const std::string &symbol, bool displayPercent){
   Json::Value jsonData;
   std::string url(IEX_ENDPOINT);
-
   displayPercent ? url += "/stock/"+symbol+"/quote?displayPercent=true" : url += "/stock/"+symbol+"/quote";
-
-
-
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -637,11 +670,12 @@ GET /stock/{symbol}/relevant
       "XLK"
   ]
 }*/
-Json::Value IEX::stocks::relevant(std::string symbol){
+Json::Value IEX::stocks::relevant(const std::string &symbol){
   Json::Value jsonData;
   std::string url(IEX_ENDPOINT);
   url += "/stock/"+symbol+"/relevant";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -661,6 +695,7 @@ Json::Value IEX::stocks::sectorPerformance(){
   std::string url(IEX_ENDPOINT);
   url += "/stock/market/sector-performance";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -677,7 +712,7 @@ GET /stock/{symbol}/splits/{range}
         "forFactor": 1
     } // , { ... }
 ]*/
-Json::Value IEX::stocks::splits(std::string symbol, std::string range){
+Json::Value IEX::stocks::splits(const std::string &symbol, const std::string &range){
   Json::Value jsonData;
   std::string url(IEX_ENDPOINT);
 
@@ -691,15 +726,17 @@ Json::Value IEX::stocks::splits(std::string symbol, std::string range){
   }
 
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
 //GET /stock/{symbol}/time-series
-Json::Value IEX::stocks::timeSeries(std::string symbol){
+Json::Value IEX::stocks::timeSeries(const std::string &symbol){
   Json::Value jsonData;
   std::string url(IEX_ENDPOINT);
   url += "/stock/"+symbol+"/time-series";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -811,11 +848,12 @@ GET /stock/{symbol}/delayed-quote
     "avgMarketPercent": 0.40847022134435956
   }
 ]*/
-Json::Value IEX::stocks::VolumeByVenue(std::string symbol){
+Json::Value IEX::stocks::VolumeByVenue(const std::string &symbol){
   Json::Value jsonData;
   std::string url(IEX_ENDPOINT);
   url += "/stock/"+symbol+"/volume-by-venue";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -864,6 +902,7 @@ Json::Value IEX::refData::symbols(){
   std::string url(IEX_ENDPOINT);
   url += "/ref-data/symbols";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -926,7 +965,7 @@ Json::Value IEX::refData::corporateActions(std::string date){
     url += "/ref-data/daily-list/corporate-actions";
     IEX::sendGetRequest(jsonData, url);
   }
-
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -983,7 +1022,7 @@ Json::Value IEX::refData::dividends(std::string date){
     url += "/ref-data/daily-list/dividends";
     IEX::sendGetRequest(jsonData, url);
   }
-
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -1036,7 +1075,7 @@ Json::Value IEX::refData::nextDayExDate(std::string date){
     url += "/ref-data/daily-list/next-day-ex-date";
     IEX::sendGetRequest(jsonData, url);
   }
-
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -1092,7 +1131,7 @@ Json::Value IEX::refData::symbolDirectory(std::string date){
     url += "/ref-data/daily-list/symbol-directory";
     IEX::sendGetRequest(jsonData, url);
   }
-
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -1125,6 +1164,7 @@ Json::Value IEX::stats::intraday(){
   std::string url(IEX_ENDPOINT);
   url += "/stats/intraday";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -1193,6 +1233,7 @@ Json::Value IEX::stats::recent(){
   std::string url(IEX_ENDPOINT);
   url += "/stats/recent";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -1229,6 +1270,7 @@ Json::Value IEX::stats::records(){
   std::string url(IEX_ENDPOINT);
   url += "/stats/records";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -1306,6 +1348,7 @@ Json::Value IEX::stats::historical(std::string date){
     url += "/stats/historical/";
     IEX::sendGetRequest(jsonData, url);
   }
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -1377,6 +1420,7 @@ Json::Value IEX::stats::historicalDaily(std::string date){
     url += "/stats/historical/daily";
     IEX::sendGetRequest(jsonData, url);
   }
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -1543,6 +1587,7 @@ Json::Value IEX::markets::market(){
   std::string url(IEX_ENDPOINT);
   url += "/market";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -1552,6 +1597,7 @@ Json::Value IEX::stocks::crypto(){
   std::string url(IEX_ENDPOINT);
   url += "/stock/market/crypto";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -1610,6 +1656,7 @@ Json::Value IEX::stocks::earningsToday(){
   std::string url(IEX_ENDPOINT);
   url += "/stock/market/today-earnings";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -1692,6 +1739,7 @@ Json::Value IEX::stocks::upcomingIPOS(){
   std::string url(IEX_ENDPOINT);
   url += "/stock/market/upcoming-ipos";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
 
@@ -1775,5 +1823,6 @@ Json::Value IEX::stocks::todayIPOS(){
   std::string url(IEX_ENDPOINT);
   url += "/stock/market/today-ipos";
   IEX::sendGetRequest(jsonData, url);
+  assert(jsonData.isArray()); //Crash if not an array
   return jsonData;
 }
