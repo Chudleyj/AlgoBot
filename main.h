@@ -1,10 +1,8 @@
 #ifndef main_h
 #define main_h
 
-#include <curl/curl.h>
-#include <vector>
 
-//#include "historicalData.h"
+#include <vector>
 #include "TechnicalAnalysis.h"
 #include "JSONdata.h"
 #include "IEX.h"

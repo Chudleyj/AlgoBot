@@ -5,10 +5,8 @@ OFFICIAL API: https://iextrading.com/developer/docs/
 Refer to the official docs to understand the return of each function.
 GET examples and JSON examples commented above each function are from the offical API.
 ALL credit for those examples belongs to IEX.
-
 “Data provided for free by IEX (https://iextrading.com/developer/).
 View IEX’s Terms of Use (https://iextrading.com/api-exhibit-a/).”
-
 */
 //TODO CHECK ALL SYMBOLS FOR VALID SYMBOL
 #include "IEX.h"
@@ -52,7 +50,7 @@ void IEX::sendGetRequest(Json::Value &jsonData, const std::string url){
     "news": [...],
     "chart": [...]
   },
-} 
+}
 */
 Json::Value IEX::stocks::batch(const std::string &symbol){
   Json::Value jsonData;
@@ -83,7 +81,6 @@ Json::Value IEX::stocks::book(const std::string &symbol){
 
 /*GET /stock/{symbol}/chart/{range}
 // .../1d
-
 [
     {
         "date": "20171215"
@@ -121,7 +118,7 @@ Json::Value IEX::stocks::chart(const std::string &symbol){
 
 //Same as chart function, except it takes a range in.
 //Range must be: 5y, 2y, 1y, ytd, 6m, 3m, 1m, 1d
-Json::Value IEX::stocks::chartRange(const std::string symbol, const std::string range){
+Json::Value IEX::stocks::chartRange(const std::string &symbol, const std::string &range){
   Json::Value jsonData;
   if(range == "5y" || range == "2y" || range == "1y" || range == "ytd" || range == "6m" || range == "3m" || range == "1m" || range == "1d"){
     std::string url(IEX_ENDPOINT);
@@ -143,7 +140,7 @@ Json::Value IEX::stocks::chartDate(const std::string &symbol, const std::string 
     std::string url(IEX_ENDPOINT);
     url+="/stock/"+symbol+"/chart/date/"+date;
     IEX::sendGetRequest(jsonData, url);
-   
+
   }
   else{
     std::cout << std::endl << "Incorrect 'date' input in function chartDate. Exiting." << std::endl;
@@ -315,7 +312,6 @@ Json::Value IEX::stocks::effectiveSpread(const std::string &symbol){
 
 /*GET /stock/{symbol}/financials
 The above example will return JSON with the following keys
-
 {
   "symbol": "AAPL",
   "financials": [
@@ -501,7 +497,6 @@ Json::Value IEX::stocks::logo(const std::string &symbol){
 
 /*
 GET /stock/{symbol}/news/last/{last}
-
 [
  {
    "datetime": "2017-06-29T13:14:22-04:00",
@@ -1663,7 +1658,6 @@ Json::Value IEX::stocks::earningsToday(){
 /*
 GET /stock/market/upcoming-ipos
 The above example will return JSON with the following keys
-
 {
     "rawData": [
         {
@@ -1747,7 +1741,6 @@ Json::Value IEX::stocks::upcomingIPOS(){
 /*
 GET /stock/market/today-ipos
 The above example will return JSON with the following keys
-
 {
     "rawData": [
         {

@@ -1,6 +1,6 @@
 #include "main.h"
-
-int main()
+#include <ctime>
+auto main() -> int
 {
   JSONdata formattedHistoricalData; //Vec to hold JSONdata structs
   TechnicalAnalysis TIobj;
@@ -9,11 +9,9 @@ int main()
 
   parseIEXdata(IEXdata, formattedHistoricalData);
 
-  //TIobj.calcRSI(formattedHistoricalData);
-  //TIobj.calcStochRSI();
-  for(int i = 0; i < 236; i++){
-    std::cout << i << ", ";
-  }
+  TIobj.calcRSI(formattedHistoricalData);
+  TIobj.calcStochRSI();
+
 }
 
 void parseIEXdata(const Json::Value IEXdata, JSONdata &formattedHistoricalData)

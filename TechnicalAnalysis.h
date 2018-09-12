@@ -8,16 +8,16 @@
 
 //TODO: add more Technical Indicators
 //Holds all TI values in vectors
-struct TechnicalIndicators{
-  std::vector<double> RSI, stochRSI;
-};
+
+void copyVec(const std::vector<double> &, std::vector<double> &, int);
 
 //Calculates values of TechnicalIndicators and stores them
 class TechnicalAnalysis{
-  std::vector<double> RSI, stochRSI;
+  std::vector<double> RSI, stochRSI,SMA,EMA;
   public:
     void calcRSI(const JSONdata);
     void calcStochRSI();
+    void calcSMA();
 };
 
 #endif
