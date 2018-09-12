@@ -44,7 +44,8 @@ void TechnicalAnalysis::calcStochRSI()
     }
 }
 
-void copyVec(const std::vector<double> &RSI, std::vector<double> &temp, int loc){
+void copyVec(const std::vector<double> &RSI, std::vector<double> &temp, int loc)
+{
   for(int i = 13; i >= 0; i--){
     temp.push_back(RSI[loc-i]);
   }
