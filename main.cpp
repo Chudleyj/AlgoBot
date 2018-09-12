@@ -1,5 +1,5 @@
 #include "main.h"
-#include <ctime>
+
 int main()
 {
   JSONdata formattedHistoricalData; //Vec to hold JSONdata structs
