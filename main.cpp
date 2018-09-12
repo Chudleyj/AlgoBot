@@ -16,7 +16,6 @@ int main()
 
 void parseIEXdata(const Json::Value &IEXdata, JSONdata &formattedHistoricalData)
 {
-  JSONdata parsedData;
   int i = 0;
   //Step through JSON file until the end is reached
   while(i < IEXdata.size()){
@@ -33,7 +32,6 @@ void parseIEXdata(const Json::Value &IEXdata, JSONdata &formattedHistoricalData)
       formattedHistoricalData.changeOverTime.push_back(IEXdata[i]["changeOverTime"].asDouble());
       formattedHistoricalData.date.push_back(IEXdata[i]["date"].asString());
       formattedHistoricalData.label.push_back(IEXdata[i]["label"].asString());
-      //formattedHistoricalData.push_back(parsedData);
       i++;
     }
 
