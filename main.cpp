@@ -1,6 +1,6 @@
 #include "main.h"
 #include <ctime>
-auto main() -> int
+int main()
 {
   JSONdata formattedHistoricalData; //Vec to hold JSONdata structs
   TechnicalAnalysis TIobj;
@@ -14,7 +14,7 @@ auto main() -> int
 
 }
 
-void parseIEXdata(const Json::Value IEXdata, JSONdata &formattedHistoricalData)
+void parseIEXdata(const Json::Value &IEXdata, JSONdata &formattedHistoricalData)
 {
   JSONdata parsedData;
   int i = 0;

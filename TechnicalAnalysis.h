@@ -12,10 +12,11 @@
 void copyVec(const std::vector<double> &, std::vector<double> &, int);
 
 //Calculates values of TechnicalIndicators and stores them
-class TechnicalAnalysis{
+class TechnicalAnalysis
+{
   std::vector<double> RSI, stochRSI,SMA,EMA;
   public:
-    void calcRSI(const JSONdata);
+    void calcRSI(const JSONdata &);
     void calcStochRSI();
     void calcSMA();
 };

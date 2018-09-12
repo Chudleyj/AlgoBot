@@ -1,6 +1,7 @@
 #include "TechnicalAnalysis.h"
 
-void TechnicalAnalysis::calcRSI(const JSONdata HistoricalData){
+void TechnicalAnalysis::calcRSI(const JSONdata &HistoricalData)
+{
   std::vector<long double> gain, loss, change, avgGain, avgLoss, RS;
   std::vector <long double> currentPeriod(HistoricalData.close.end()-250,HistoricalData.close.end());
   double sumGain = 0, sumLoss = 0;
@@ -30,7 +31,8 @@ void TechnicalAnalysis::calcRSI(const JSONdata HistoricalData){
   }
 }
 
-void TechnicalAnalysis::calcStochRSI(){
+void TechnicalAnalysis::calcStochRSI()
+{
   std::vector<double> tempVec;
 
   for(int i = 13; i <RSI.size(); i ++){
