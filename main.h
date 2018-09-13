@@ -11,6 +11,7 @@
 #include <json/json.h>
 #include <curl/curl.h>
 
+
 void parseIEXdata(const Json::Value &, JSONdata &);
 
 #endif
