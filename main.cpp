@@ -2,12 +2,14 @@
 
 int main()
 {
-        JSONdata formattedHistoricalData; //Vec to hold JSONdata structs
-        TechnicalAnalysis TIobj;
+    JSONdata formattedHistoricalData;
+    TechnicalAnalysis TIobj;
 
-        Json::Value IEXdata = IEX::stocks::chartRange("aapl", "1d"); //Pull stock data from IEX API
-
-        parseIEXdata(IEXdata, formattedHistoricalData);
+    Json::Value IEXdata = IEX::stocks::chartRange("aapl", "1d"); //Pull stock data from IEX API
+    parseIEXdata(IEXdata, formattedHistoricalData);
+    while(1){
+        //Use a seperate thread to update data for next calcs while current calcs are done.
+        std::thread t1(getAndParseData, std::ref(formattedHistoricalData));
 
         TIobj.calcRSI(formattedHistoricalData);
         TIobj.calcStochRSI();
@@ -15,7 +17,18 @@ int main()
         //Clean up for reassignment
         TIobj.clearTAobj();
         formattedHistoricalData.clearJSONstruct();
-        IEXdata = nanl;
+        IEXdata = &nanl;
+
+        t1.join(); //Rejoin main thread, adding new data for next calcs
+        std::cout<<std::endl << "--------------------------" <<std::endl; //TODO temp, remove
+      }
+      return 0;
+}
+
+//MULTITHREAD USES THIS
+void getAndParseData(JSONdata &formattedHistoricalData){
+  Json::Value IEXdata = IEX::stocks::chartRange("aapl", "1d");
+  parseIEXdata(IEXdata, formattedHistoricalData);
 }
 
 void parseIEXdata(const Json::Value &IEXdata, JSONdata &formattedHistoricalData)

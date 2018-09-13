@@ -10,8 +10,9 @@
 #include <iostream>
 #include <json/json.h>
 #include <curl/curl.h>
+#include <thread>
 
-
+void getAndParseData(JSONdata &);
 void parseIEXdata(const Json::Value &, JSONdata &);
 
 #endif
