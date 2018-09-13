@@ -1,19 +1,19 @@
 #include "JSONdata.h"
 
 void JSONdata::clearJSONstruct(){
-  open.clear();
-  high.clear();
-  low.clear();
-  close.clear();
-  change.clear();
-  changePercent.clear();
-  changePercent.clear();
-  vmap.clear();
-  changeOverTime.clear();
-  date.clear();
-  label.clear();
-  volume.clear();
-  unadjustedVolume.clear();
+        open.clear();
+        high.clear();
+        low.clear();
+        close.clear();
+        change.clear();
+        changePercent.clear();
+        changePercent.clear();
+        vmap.clear();
+        changeOverTime.clear();
+        date.clear();
+        label.clear();
+        volume.clear();
+        unadjustedVolume.clear();
 }
 
 bool JSONdata::isEmpty() const

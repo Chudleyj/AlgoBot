@@ -2,33 +2,40 @@
 
 int main()
 {
-    JSONdata formattedHistoricalData;
-    TechnicalAnalysis TIobj;
+        JSONdata formattedHistoricalData, threadData;
+        TechnicalAnalysis TIobj;
 
-    Json::Value IEXdata = IEX::stocks::chartRange("aapl", "1d"); //Pull stock data from IEX API
-    parseIEXdata(IEXdata, formattedHistoricalData);
-    while(1){
-        //Use a seperate thread to update data for next calcs while current calcs are done.
-        std::thread t1(getAndParseData, std::ref(formattedHistoricalData));
+        Json::Value IEXdata = IEX::stocks::chartRange("aapl", "1d"); //Pull stock data from IEX API
+        parseIEXdata(IEXdata, formattedHistoricalData);
 
-        TIobj.calcRSI(formattedHistoricalData);
-        TIobj.calcStochRSI();
+        while(1) {
+                //Use a seperate thread to update data for next calcs while current calcs are done.
+                std::thread t1(getAndParseData, std::ref(threadData));
 
-        //Clean up for reassignment
-        TIobj.clearTAobj();
-        formattedHistoricalData.clearJSONstruct();
-        IEXdata = &nanl;
+                TIobj.calcRSI(formattedHistoricalData);
+                TIobj.calcStochRSI();
 
-        t1.join(); //Rejoin main thread, adding new data for next calcs
-        std::cout<<std::endl << "--------------------------" <<std::endl; //TODO temp, remove
-      }
-      return 0;
+                //Clean up for reassignment
+                TIobj.clearTAobj();
+                formattedHistoricalData.clearJSONstruct();
+
+                t1.join(); //Rejoin main thread, adding new data for next calcs
+
+                //Using var threadData here to temp store formattedHistoricalData avoids deadlock.
+                formattedHistoricalData = threadData;
+                threadData.clearJSONstruct();
+        }
+
+        return 0;
 }
 
-//MULTITHREAD USES THIS
-void getAndParseData(JSONdata &formattedHistoricalData){
-  Json::Value IEXdata = IEX::stocks::chartRange("aapl", "1d");
-  parseIEXdata(IEXdata, formattedHistoricalData);
+//MULTITHREAD T1 USES THIS
+void getAndParseData(JSONdata &dataToFormat)
+{
+        assert(dataToFormat.isEmpty());
+
+        Json::Value IEXdata = IEX::stocks::chartRange("aapl", "1d");
+        parseIEXdata(IEXdata, dataToFormat);
 }
 
 void parseIEXdata(const Json::Value &IEXdata, JSONdata &formattedHistoricalData)
