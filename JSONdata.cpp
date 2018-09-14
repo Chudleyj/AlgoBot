@@ -18,42 +18,42 @@ void JSONdata::clearJSONstruct(){
 
 bool JSONdata::isEmpty() const
 {
-        if(open.empty())
-                return true;
+        if(!open.empty())
+                return false;
 
-        else if(high.empty())
-                return true;
+        else if(!high.empty())
+                return false;
 
-        else if(low.empty())
-                return true;
+        else if(!low.empty())
+                return false;
 
-        else if(close.empty())
-                return true;
+        else if(!close.empty())
+                return false;
 
-        else if(change.empty())
-                return true;
+        else if(!change.empty())
+                return false;
 
-        else if(changePercent.empty())
-                return true;
+        else if(!changePercent.empty())
+                return false;
 
-        else if(vmap.empty())
-                return true;
+        else if(!vmap.empty())
+                return false;
 
-        else if(changeOverTime.empty())
-                return true;
+        else if(!changeOverTime.empty())
+                return false;
 
-        else if(date.empty())
-                return true;
+        else if(!date.empty())
+                return false;
 
-        else if(label.empty())
-                return true;
+        else if(!label.empty())
+                return false;
 
-        else if(volume.empty())
-                return true;
+        else if(!volume.empty())
+                return false;
 
-        else if(unadjustedVolume.empty())
-                return true;
+        else if(!unadjustedVolume.empty())
+                return false;
 
         else
-                return false;
+                return true;
 }

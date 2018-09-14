@@ -46,6 +46,7 @@ void getAndParseData(JSONdata &dataToFormat, const std::string &stock, const std
 {
         assert(dataToFormat.isEmpty());
         assert(!range.empty());
+        assert(!stock.empty());
 
         Json::Value IEXdata = IEX::stocks::chartRange(stock, range);
         parseIEXdata(IEXdata, dataToFormat);

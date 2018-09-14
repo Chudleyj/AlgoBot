@@ -16,7 +16,7 @@
 class TechnicalAnalysis
 {
 std::vector<double> RSI, stochRSI,fiftySMA,hundredSMA,hundFifSMA,twoHundSMA,
-                    fiftyEMA, hundredEMA, hundFifEMA, twoHundEMA;
+                    fiftyEMA, hundredEMA, hundFifEMA, twoHundEMA, stdDeviation;
 public:
 
 void calcFiftySMA(const JSONdata &);

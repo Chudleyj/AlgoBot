@@ -14,6 +14,23 @@ void TechnicalAnalysis::clearTAobj()
         twoHundEMA.clear();
 }
 
+/*
+void TechnicalAnalysis::calcSD()
+{
+    double sum = 0.0, mean, standardDeviation = 0.0;
+
+    for(int i = 0; i < 10; ++i)
+        sum += data[i];
+
+    mean = sum/10;
+
+    for(i = 0; i < 10; ++i)
+        standardDeviation += pow(data[i] - mean, 2);
+
+    return sqrt(standardDeviation / 10);
+}
+*/
+
 /*-------------------- START EMAs --------------------*/
 void TechnicalAnalysis::calcFiftyEMA(const JSONdata &HistoricalData)
 {
