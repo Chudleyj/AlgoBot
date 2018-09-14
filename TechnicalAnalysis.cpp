@@ -42,7 +42,7 @@ void TechnicalAnalysis::calcHundredEMA(const JSONdata &HistoricalData)
     sum += HistoricalData.close[i];
 
   SMA = sum/period;
-  fiftyEMA.push_back(SMA);
+  hundredEMA.push_back(SMA);
   multipler = 2/(period + 1);
 
   for(int i = period; i <= (HistoricalData.close.size() - period); i++){
@@ -54,7 +54,7 @@ void TechnicalAnalysis::calcHundredEMA(const JSONdata &HistoricalData)
 void TechnicalAnalysis::calcHundFiftyEMA(const JSONdata &HistoricalData)
 {
   double SMA = 0.0, sum = 0.0, multipler = 0.0;
-  int period = 100, j = 0;
+  int period = 150, j = 0;
 
   for(int i = 0; i < period; i++)
     sum += HistoricalData.close[i];
