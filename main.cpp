@@ -2,27 +2,39 @@
 
 int main()
 {
-        JSONdata formattedHistoricalData, threadData;
+        JSONdata minData, threadData, test;
         TechnicalAnalysis TIobj;
 
         Json::Value IEXdata = IEX::stocks::chartRange("aapl", "1d"); //Pull stock data from IEX API
-        parseIEXdata(IEXdata, formattedHistoricalData);
+        parseIEXdata(IEXdata, minData);
 
         while(1) {
                 //Use a seperate thread to update data for next calcs while current calcs are done.
-                std::thread t1(getAndParseData, std::ref(threadData));
+                std::thread t1(getAndParseData, std::ref(threadData),std::move("aapl"), std::move("1d"));
+                //std::thread t2(getAndParseData, std::ref(test), std::move("1y"));
 
-                TIobj.calcRSI(formattedHistoricalData);
+                TIobj.calcRSI(minData);
                 TIobj.calcStochRSI();
+
+                TIobj.calcFiftySMA(minData);
+                TIobj.calcHundredSMA(minData);
+                TIobj.calcHundFiftySMA(minData);
+                TIobj.calcTwoHundSMA(minData);
+
+                TIobj.calcFiftyEMA(minData);
+                TIobj.calcHundredEMA(minData);
+                TIobj.calcHundFiftyEMA(minData);
+                TIobj.calcTwoHundEMA(minData);
 
                 //Clean up for reassignment
                 TIobj.clearTAobj();
-                formattedHistoricalData.clearJSONstruct();
+                minData.clearJSONstruct();
 
                 t1.join(); //Rejoin main thread, adding new data for next calcs
+                //t2.join();
 
-                //Using var threadData here to temp store formattedHistoricalData avoids deadlock.
-                formattedHistoricalData = threadData;
+                //Using var threadData here to temp store minData avoids deadlock.
+                minData = threadData;
                 threadData.clearJSONstruct();
         }
 
@@ -30,11 +42,12 @@ int main()
 }
 
 //MULTITHREAD T1 USES THIS
-void getAndParseData(JSONdata &dataToFormat)
+void getAndParseData(JSONdata &dataToFormat, const std::string &stock, const std::string &range)
 {
         assert(dataToFormat.isEmpty());
+        assert(!range.empty());
 
-        Json::Value IEXdata = IEX::stocks::chartRange("aapl", "1d");
+        Json::Value IEXdata = IEX::stocks::chartRange(stock, range);
         parseIEXdata(IEXdata, dataToFormat);
 }
 

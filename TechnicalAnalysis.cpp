@@ -1,12 +1,162 @@
 #include "TechnicalAnalysis.h"
 
-void TechnicalAnalysis::clearTAobj(){
+void TechnicalAnalysis::clearTAobj()
+{
         RSI.clear();
         stochRSI.clear();
-        SMA.clear();
-        EMA.clear();
+        fiftySMA.clear();
+        hundredSMA.clear();
+        hundFifSMA.clear();
+        twoHundSMA.clear();
+        fiftyEMA.clear();
+        hundredEMA.clear();
+        hundFifEMA.clear();
+        twoHundEMA.clear();
 }
 
+/*-------------------- START EMAs --------------------*/
+void TechnicalAnalysis::calcFiftyEMA(const JSONdata &HistoricalData)
+{
+  double SMA = 0.0, sum = 0.0, multipler = 0.0;
+  int period = 50, j = 0;
+
+  for(int i = 0; i < period; i++)
+    sum += HistoricalData.close[i];
+
+  SMA = sum/period;
+  fiftyEMA.push_back(SMA);
+  multipler = 2/(period + 1);
+
+  for(int i = period; i <= (HistoricalData.close.size() - period); i++){
+    fiftyEMA.push_back((HistoricalData.close[i]-fiftyEMA[j])*multipler+fiftyEMA[j]);
+    j++;
+  }
+}
+
+void TechnicalAnalysis::calcHundredEMA(const JSONdata &HistoricalData)
+{
+  double SMA = 0.0, sum = 0.0, multipler = 0.0;
+  int period = 100, j = 0;
+
+  for(int i = 0; i < period; i++)
+    sum += HistoricalData.close[i];
+
+  SMA = sum/period;
+  fiftyEMA.push_back(SMA);
+  multipler = 2/(period + 1);
+
+  for(int i = period; i <= (HistoricalData.close.size() - period); i++){
+    hundredEMA.push_back((HistoricalData.close[i]-fiftyEMA[j])*multipler+fiftyEMA[j]);
+    j++;
+  }
+}
+
+void TechnicalAnalysis::calcHundFiftyEMA(const JSONdata &HistoricalData)
+{
+  double SMA = 0.0, sum = 0.0, multipler = 0.0;
+  int period = 50, j = 0;
+
+  for(int i = 0; i < period; i++)
+    sum += HistoricalData.close[i];
+
+  SMA = sum/period;
+  hundFifEMA.push_back(SMA);
+  multipler = 2/(period + 1);
+
+  for(int i = period; i <= (HistoricalData.close.size() - period); i++){
+    fiftyEMA.push_back((HistoricalData.close[i]-fiftyEMA[j])*multipler+fiftyEMA[j]);
+    j++;
+  }
+}
+
+void TechnicalAnalysis::calcTwoHundEMA(const JSONdata &HistoricalData)
+{
+  double SMA = 0.0, sum = 0.0, multipler = 0.0;
+  int period = 50, j = 0;
+
+  for(int i = 0; i < period; i++)
+    sum += HistoricalData.close[i];
+
+  SMA = sum/period;
+  fiftyEMA.push_back(SMA);
+  multipler = 2/(period + 1);
+
+  for(int i = period; i <= (HistoricalData.close.size() - period); i++){
+    twoHundEMA.push_back((HistoricalData.close[i]-fiftyEMA[j])*multipler+fiftyEMA[j]);
+    j++;
+  }
+
+  for(double i : twoHundEMA){
+      std::cout<<std::endl<<i;
+  }
+}
+/*-------------------- END EMAs   --------------------*/
+
+
+/*-------------------- START SMAs --------------------*/
+void TechnicalAnalysis::calcFiftySMA(const JSONdata &HistoricalData)
+{
+  double sum;
+  int period = 50;
+
+  for(int i = 0; i <= (HistoricalData.close.size() - period); i++){
+    sum = 0.0;
+
+    for (int j = i; j < i + period; j++)
+      sum += HistoricalData.close[j];
+
+    fiftySMA.push_back(sum/period);
+  }
+}
+
+void TechnicalAnalysis::calcHundredSMA(const JSONdata &HistoricalData)
+{
+  double sum;
+  int period = 100;
+
+  for(int i = 0; i <= (HistoricalData.close.size() - period); i++){
+    sum = 0.0;
+
+    for (int j = i; j < i + period; j++)
+      sum += HistoricalData.close[j];
+
+    hundredSMA.push_back(sum/period);
+  }
+}
+
+void TechnicalAnalysis::calcHundFiftySMA(const JSONdata &HistoricalData)
+{
+  double sum;
+  int period = 150;
+
+  for(int i = 0; i <= (HistoricalData.close.size() - period); i++){
+    sum = 0.0;
+
+    for (int j = i; j < i + period; j++)
+      sum += HistoricalData.close[j];
+
+    hundFifSMA.push_back(sum/period);
+  }
+}
+
+void TechnicalAnalysis::calcTwoHundSMA(const JSONdata &HistoricalData)
+{
+  double sum;
+  int period = 200;
+
+  for(int i = 0; i <= (HistoricalData.close.size() - period); i++){
+    sum = 0.0;
+
+    for (int j = i; j < i + period; j++)
+      sum += HistoricalData.close[j];
+
+    twoHundSMA.push_back(sum/period);
+  }
+}
+/*-------------------- END SMAs   --------------------*/
+
+
+/*-------------------- START RSI  --------------------*/
 void TechnicalAnalysis::calcRSI(const JSONdata &HistoricalData)
 {
         assert(!HistoricalData.isEmpty());
@@ -50,7 +200,7 @@ void TechnicalAnalysis::calcRSI(const JSONdata &HistoricalData)
         for(int i = 0; i < avgGain.size(); i++) {
                 RS.push_back(avgGain[i]/avgLoss[i]);
                 RSI.push_back(avgLoss[i] == 0 ? 100 : 100 - (100/(1+RS[i])));
-                std::cout<<"RSI: " << RSI[i] << std::endl;
+              //  std::cout<<"RSI: " << RSI[i] << std::endl;
         }
 }
 
@@ -74,3 +224,4 @@ void TechnicalAnalysis::calcStochRSI()
                 tempVec.clear();
         }
 }
+/*-------------------- END RSI  --------------------*/

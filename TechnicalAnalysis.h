@@ -15,11 +15,23 @@
 //Calculates values of TechnicalIndicators and stores them
 class TechnicalAnalysis
 {
-std::vector<double> RSI, stochRSI,SMA,EMA;
+std::vector<double> RSI, stochRSI,fiftySMA,hundredSMA,hundFifSMA,twoHundSMA,
+                    fiftyEMA, hundredEMA, hundFifEMA, twoHundEMA;
 public:
+
+void calcFiftySMA(const JSONdata &);
+void calcHundredSMA(const JSONdata &);
+void calcHundFiftySMA(const JSONdata &);
+void calcTwoHundSMA(const JSONdata &);
+
+void calcFiftyEMA(const JSONdata &);
+void calcHundredEMA(const JSONdata &);
+void calcHundFiftyEMA(const JSONdata &);
+void calcTwoHundEMA(const JSONdata &);
+
 void calcRSI(const JSONdata &);
 void calcStochRSI();
-void calcSMA();
+
 void clearTAobj();
 };
 
