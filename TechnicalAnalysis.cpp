@@ -64,7 +64,7 @@ void TechnicalAnalysis::calcHundFiftyEMA(const JSONdata &HistoricalData)
   multipler = 2/(period + 1);
 
   for(int i = period; i <= (HistoricalData.close.size() - period); i++){
-    hundredEMA.push_back((HistoricalData.close[i]-fiftyEMA[j])*multipler+fiftyEMA[j]);
+    hundFifEMA.push_back((HistoricalData.close[i]-fiftyEMA[j])*multipler+fiftyEMA[j]);
     j++;
   }
 }
