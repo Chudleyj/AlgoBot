@@ -4,146 +4,146 @@ std::mutex _mtx;
 
 void JSONdata::setOpen(const double &temp)
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  open.push_back(temp);
+        std::lock_guard<std::mutex> guard(_mtx);
+        open.push_back(temp);
 }
 
 void JSONdata::setHigh(const double &temp)
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  high.push_back(temp);
+        std::lock_guard<std::mutex> guard(_mtx);
+        high.push_back(temp);
 }
 
 void JSONdata::setLow(const double &temp)
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  low.push_back(temp);
+        std::lock_guard<std::mutex> guard(_mtx);
+        low.push_back(temp);
 }
 
 void JSONdata::setClose(const double &temp)
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  close.push_back(temp);
+        std::lock_guard<std::mutex> guard(_mtx);
+        close.push_back(temp);
 }
 
 void JSONdata::setChange(const double &temp)
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  change.push_back(temp);
+        std::lock_guard<std::mutex> guard(_mtx);
+        change.push_back(temp);
 }
 
 void JSONdata::setChgPer(const double &temp)
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  changePercent.push_back(temp);
+        std::lock_guard<std::mutex> guard(_mtx);
+        changePercent.push_back(temp);
 }
 
 void JSONdata::setVmap(const double &temp)
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  vmap.push_back(temp);
+        std::lock_guard<std::mutex> guard(_mtx);
+        vmap.push_back(temp);
 }
 
 void JSONdata::setChgOvrTime(const double &temp)
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  changeOverTime.push_back(temp);
+        std::lock_guard<std::mutex> guard(_mtx);
+        changeOverTime.push_back(temp);
 }
 
 void JSONdata::setDate(const std::string &temp)
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  date.push_back(temp);
+        std::lock_guard<std::mutex> guard(_mtx);
+        date.push_back(temp);
 }
 
 void JSONdata::setLabel(const std::string &temp)
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  label.push_back(temp);
+        std::lock_guard<std::mutex> guard(_mtx);
+        label.push_back(temp);
 }
 
 void JSONdata::setVol(const long long &temp)
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  volume.push_back(temp);
+        std::lock_guard<std::mutex> guard(_mtx);
+        volume.push_back(temp);
 }
 
 void JSONdata::setUnAdjVol(const long long &temp)
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  unadjustedVolume.push_back(temp);
+        std::lock_guard<std::mutex> guard(_mtx);
+        unadjustedVolume.push_back(temp);
 }
 
 std::vector<double> JSONdata::getOpen() const
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  return open;
+        std::lock_guard<std::mutex> guard(_mtx);
+        return open;
 }
 
 std::vector<double> JSONdata::getHigh() const
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  return high;
+        std::lock_guard<std::mutex> guard(_mtx);
+        return high;
 }
 
 std::vector<double> JSONdata::getLow() const
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  return low;
+        std::lock_guard<std::mutex> guard(_mtx);
+        return low;
 }
 
 std::vector<double> JSONdata::getClose() const
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  return close;
+        std::lock_guard<std::mutex> guard(_mtx);
+        return close;
 }
 
 std::vector<double> JSONdata::getChange() const
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  return change;
+        std::lock_guard<std::mutex> guard(_mtx);
+        return change;
 }
 
 std::vector<double> JSONdata::getChgPer() const
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  return changePercent;
+        std::lock_guard<std::mutex> guard(_mtx);
+        return changePercent;
 }
 
 std::vector<double> JSONdata::getVmap() const
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  return vmap;
+        std::lock_guard<std::mutex> guard(_mtx);
+        return vmap;
 }
 
 std::vector<double> JSONdata::getChgOvrTime() const
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  return changeOverTime;
+        std::lock_guard<std::mutex> guard(_mtx);
+        return changeOverTime;
 }
 
 std::vector<std::string> JSONdata::getDate() const
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  return date;
+        std::lock_guard<std::mutex> guard(_mtx);
+        return date;
 }
 
 std::vector<std::string> JSONdata::getLabel() const
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  return label;
+        std::lock_guard<std::mutex> guard(_mtx);
+        return label;
 }
 
 std::vector<long long> JSONdata::getVol() const
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  return volume;
+        std::lock_guard<std::mutex> guard(_mtx);
+        return volume;
 }
 
 std::vector<long long> JSONdata::getUnAdjVol() const
 {
-  std::lock_guard<std::mutex> guard(_mtx);
-  return unadjustedVolume;
+        std::lock_guard<std::mutex> guard(_mtx);
+        return unadjustedVolume;
 }
 
 void JSONdata::parseIEXdata(const Json::Value &IEXdata)
@@ -167,7 +167,7 @@ void JSONdata::parseIEXdata(const Json::Value &IEXdata)
                 setChgOvrTime(IEXdata[i]["changeOverTime"].asDouble());
                 setDate(IEXdata[i]["date"].asString());
                 setLabel(IEXdata[i]["label"].asString());
-                
+
                 i++;
         }
 }

@@ -4,11 +4,11 @@ int main()
 {
         JSONdata minData, threadData, test;
         TechnicalAnalysis TIobj;
-        
+
         Json::Value IEXdata = IEX::stocks::chartRange("aapl", "1d"); //Pull stock data from IEX API
         minData.parseIEXdata(IEXdata);
 
-       while(1) {
+        while(1) {
                 //Use a seperate thread to update data for next calcs while current calcs are done.
                 std::thread t1(getAndParseData, std::ref(threadData),std::move("aapl"), std::move("1d"));
                 std::thread t2(&TechnicalAnalysis::calcRSI,TIobj,std::ref(minData));
