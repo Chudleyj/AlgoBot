@@ -5,6 +5,8 @@
 #include <cmath> //abs val
 #include <iostream>
 #include <assert.h>
+#include <thread>
+#include <mutex>
 #include "JSONdata.h"
 
 //TODO: add more Technical Indicators
@@ -18,6 +20,32 @@ class TechnicalAnalysis
 std::vector<double> RSI, stochRSI,fiftySMA,hundredSMA,hundFifSMA,twoHundSMA,
                     fiftyEMA, hundredEMA, hundFifEMA, twoHundEMA, stdDeviation;
 public:
+
+std::vector<double> getRSI();
+std::vector<double> getStoch();
+
+std::vector<double> getFifSMA();
+std::vector<double> getHundSMA();
+std::vector<double> getHundFifSMA();
+std::vector<double> getTwoHundSMA();
+
+std::vector<double> getFifEMA();
+std::vector<double> getHundEMA();
+std::vector<double> getHundFifEMA();
+std::vector<double> getTwoHundEMA();
+
+void setFifSMA(const double &);
+void setHundSMA(const double &);
+void setHundFifSMA(const double &);
+void setTwoHundSMA(const double &);
+
+void setFifEMA(const double &);
+void setHundEMA(const double &);
+void setHundFifEMA(const double &);
+void setTwoHundEMA(const double &);
+
+void setRSI(const double &);
+void setStoch(const double &);
 
 void calcFiftySMA(const JSONdata &);
 void calcHundredSMA(const JSONdata &);

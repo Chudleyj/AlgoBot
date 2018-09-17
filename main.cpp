@@ -4,37 +4,42 @@ int main()
 {
         JSONdata minData, threadData, test;
         TechnicalAnalysis TIobj;
-
+        
         Json::Value IEXdata = IEX::stocks::chartRange("aapl", "1d"); //Pull stock data from IEX API
-        parseIEXdata(IEXdata, minData);
+        minData.parseIEXdata(IEXdata);
 
-        while(1) {
+       while(1) {
                 //Use a seperate thread to update data for next calcs while current calcs are done.
                 std::thread t1(getAndParseData, std::ref(threadData),std::move("aapl"), std::move("1d"));
-                //std::thread t2(getAndParseData, std::ref(test), std::move("1y"));
+                std::thread t2(&TechnicalAnalysis::calcRSI,TIobj,std::ref(minData));
+                std::thread t3(&TechnicalAnalysis::calcFiftySMA,TIobj,std::ref(minData));
+                std::thread t4(&TechnicalAnalysis::calcHundredSMA,TIobj,std::ref(minData));
+                std::thread t5(&TechnicalAnalysis::calcHundFiftySMA,TIobj,std::ref(minData));
+                std::thread t6(&TechnicalAnalysis::calcTwoHundSMA,TIobj,std::ref(minData));
+                std::thread t7(&TechnicalAnalysis::calcFiftyEMA,TIobj,std::ref(minData));
+                std::thread t8(&TechnicalAnalysis::calcHundredEMA,TIobj,std::ref(minData));
+                std::thread t9(&TechnicalAnalysis::calcHundFiftyEMA,TIobj,std::ref(minData));
+                std::thread t10(&TechnicalAnalysis::calcTwoHundEMA,TIobj,std::ref(minData));
 
-                TIobj.calcRSI(minData);
-                TIobj.calcStochRSI();
-
-                TIobj.calcFiftySMA(minData);
-                TIobj.calcHundredSMA(minData);
-                TIobj.calcHundFiftySMA(minData);
-                TIobj.calcTwoHundSMA(minData);
-
-                TIobj.calcFiftyEMA(minData);
-                TIobj.calcHundredEMA(minData);
-                TIobj.calcHundFiftyEMA(minData);
-                TIobj.calcTwoHundEMA(minData);
+                t1.join(); //Rejoin main thread, adding new data for next calcs
+                t2.join();
+                t3.join();
+                t4.join();
+                t5.join();
+                t6.join();
+                t7.join();
+                t8.join();
+                t9.join();
+                t10.join();
 
                 //Clean up for reassignment
                 TIobj.clearTAobj();
                 minData.clearJSONstruct();
 
-                t1.join(); //Rejoin main thread, adding new data for next calcs
-                //t2.join();
-
                 //Using var threadData here to temp store minData avoids deadlock.
                 minData = threadData;
+                test = threadData;
+                //Clean up for reassignment
                 threadData.clearJSONstruct();
         }
 
@@ -49,30 +54,5 @@ void getAndParseData(JSONdata &dataToFormat, const std::string &stock, const std
         assert(!stock.empty());
 
         Json::Value IEXdata = IEX::stocks::chartRange(stock, range);
-        parseIEXdata(IEXdata, dataToFormat);
-}
-
-void parseIEXdata(const Json::Value &IEXdata, JSONdata &formattedHistoricalData)
-{
-        assert(!IEXdata.empty());
-        int i = 0;
-
-        //Step through JSON file until the end is reached
-        while(i < IEXdata.size()) {
-                //Parse the JSON data into the struct
-                formattedHistoricalData.open.push_back(IEXdata[i]["open"].asDouble());
-                formattedHistoricalData.high.push_back(IEXdata[i]["high"].asDouble());
-                formattedHistoricalData.low.push_back(IEXdata[i]["low"].asDouble());
-                formattedHistoricalData.close.push_back(IEXdata[i]["close"].asDouble());
-                formattedHistoricalData.volume.push_back(IEXdata[i]["volume"].asInt64());
-                formattedHistoricalData.unadjustedVolume.push_back(IEXdata[i]["unadjustedVolume"].asInt64());
-                formattedHistoricalData.change.push_back(IEXdata[i]["change"].asDouble());
-                formattedHistoricalData.changePercent.push_back(IEXdata[i]["changePercent"].asDouble());
-                formattedHistoricalData.vmap.push_back(IEXdata[i]["vmap"].asDouble());
-                formattedHistoricalData.changeOverTime.push_back(IEXdata[i]["changeOverTime"].asDouble());
-                formattedHistoricalData.date.push_back(IEXdata[i]["date"].asString());
-                formattedHistoricalData.label.push_back(IEXdata[i]["label"].asString());
-                i++;
-        }
-
+        dataToFormat.parseIEXdata(IEXdata);
 }

@@ -13,6 +13,6 @@
 #include <thread>
 
 void getAndParseData(JSONdata &, const std::string &, const std::string &);
-void parseIEXdata(const Json::Value &, JSONdata &);
+
 
 #endif
