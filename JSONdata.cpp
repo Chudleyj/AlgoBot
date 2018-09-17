@@ -155,18 +155,19 @@ void JSONdata::parseIEXdata(const Json::Value &IEXdata)
         //Step through JSON file until the end is reached
         while(i < IEXdata.size()) {
                 //Parse the JSON data into the struct
-                open.push_back(IEXdata[i]["open"].asDouble());
-                high.push_back(IEXdata[i]["high"].asDouble());
-                low.push_back(IEXdata[i]["low"].asDouble());
-                close.push_back(IEXdata[i]["close"].asDouble());
-                volume.push_back(IEXdata[i]["volume"].asInt64());
-                unadjustedVolume.push_back(IEXdata[i]["unadjustedVolume"].asInt64());
-                change.push_back(IEXdata[i]["change"].asDouble());
-                changePercent.push_back(IEXdata[i]["changePercent"].asDouble());
-                vmap.push_back(IEXdata[i]["vmap"].asDouble());
-                changeOverTime.push_back(IEXdata[i]["changeOverTime"].asDouble());
-                date.push_back(IEXdata[i]["date"].asString());
-                label.push_back(IEXdata[i]["label"].asString());
+                setOpen(IEXdata[i]["open"].asDouble());
+                setHigh(IEXdata[i]["high"].asDouble());
+                setLow(IEXdata[i]["low"].asDouble());
+                setClose(IEXdata[i]["close"].asDouble());
+                setVol(IEXdata[i]["volume"].asInt64());
+                setUnAdjVol(IEXdata[i]["unadjustedVolume"].asInt64());
+                setChange(IEXdata[i]["change"].asDouble());
+                setChgPer(IEXdata[i]["changePercent"].asDouble());
+                setVmap(IEXdata[i]["vmap"].asDouble());
+                setChgOvrTime(IEXdata[i]["changeOverTime"].asDouble());
+                setDate(IEXdata[i]["date"].asString());
+                setLabel(IEXdata[i]["label"].asString());
+                
                 i++;
         }
 }

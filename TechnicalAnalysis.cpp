@@ -162,7 +162,7 @@ void TechnicalAnalysis::calcFiftyEMA(const JSONdata &HistoricalData)
 
   double SMA = 0.0, sum = 0.0, multipler = 0.0;
   int period = 50, j = 0;
-  std::vector<double> closePrices = HistoricalData.getClose();
+  auto closePrices= HistoricalData.getClose();
   std::vector<double> tempEMA;
 
   for(int i = 0; i < period; i++)
@@ -186,7 +186,7 @@ void TechnicalAnalysis::calcHundredEMA(const JSONdata &HistoricalData)
 
   double SMA = 0.0, sum = 0.0, multipler = 0.0;
   int period = 100, j = 0;
-  std::vector<double> closePrices = HistoricalData.getClose();
+  auto closePrices= HistoricalData.getClose();
   std::vector<double> tempEMA;
 
   for(int i = 0; i < period; i++)
@@ -210,7 +210,7 @@ void TechnicalAnalysis::calcHundFiftyEMA(const JSONdata &HistoricalData)
 
   double SMA = 0.0, sum = 0.0, multipler = 0.0;
   int period = 150, j = 0;
-  std::vector<double> closePrices = HistoricalData.getClose();
+  auto closePrices= HistoricalData.getClose();
   std::vector<double> tempEMA;
 
   for(int i = 0; i < period; i++)
@@ -234,7 +234,7 @@ void TechnicalAnalysis::calcTwoHundEMA(const JSONdata &HistoricalData)
 
   double SMA = 0.0, sum = 0.0, multipler = 0.0;
   int period = 200, j = 0;
-  std::vector<double> closePrices = HistoricalData.getClose();
+  auto closePrices = HistoricalData.getClose();
   std::vector<double> tempEMA;
 
   for(int i = 0; i < period; i++)
@@ -262,7 +262,7 @@ void TechnicalAnalysis::calcFiftySMA(const JSONdata &HistoricalData)
   double sum;
   int period = 50;
 
-  std::vector<double> closePrices = HistoricalData.getClose();
+  auto closePrices = HistoricalData.getClose();
   std::vector<double> tempSMA;
 
   for(int i = 0; i <= (closePrices.size() - period); i++){
@@ -282,7 +282,7 @@ void TechnicalAnalysis::calcHundredSMA(const JSONdata &HistoricalData)
   double sum;
   int period = 100;
 
-  std::vector<double> closePrices = HistoricalData.getClose();
+  auto closePrices= HistoricalData.getClose();
   std::vector<double> tempSMA;
 
   for(int i = 0; i <= (closePrices.size() - period); i++){
@@ -301,7 +301,7 @@ void TechnicalAnalysis::calcHundFiftySMA(const JSONdata &HistoricalData)
   double sum;
   int period = 150;
 
-  std::vector<double> closePrices = HistoricalData.getClose();
+  auto closePrices = HistoricalData.getClose();
   std::vector<double> tempSMA;
 
   for(int i = 0; i <= (closePrices.size() - period); i++){
@@ -320,7 +320,7 @@ void TechnicalAnalysis::calcTwoHundSMA(const JSONdata &HistoricalData)
   double sum;
   int period = 200;
 
-  std::vector<double> closePrices = HistoricalData.getClose();
+  auto closePrices = HistoricalData.getClose();
   std::vector<double> tempSMA;
 
   for(int i = 0; i <= (closePrices.size() - period); i++){
@@ -346,8 +346,9 @@ void TechnicalAnalysis::calcRSI(const JSONdata &HistoricalData)
                                  };
 
         std::vector<long double> gain, loss, change, avgGain, avgLoss, RS;
-        std::vector <double> closePrices = HistoricalData.getClose();
-        //We need these if/else statements so program works when there hasn't been 250 min in the day yet.
+        auto closePrices = HistoricalData.getClose();
+
+        //We need these if/else statements so program works when there hasn't been 250 data points yet.
         if(closePrices.size() > 250) {
                 std::vector <long double> currentPeriod(closePrices.end()-250,closePrices.end());
                 pushCurrentPeriod(currentPeriod, change);
@@ -398,7 +399,8 @@ void TechnicalAnalysis::calcStochRSI()
                                     temp.push_back(RSI[loc-i]);
                     };
 
-        std::vector<double> tempVec, tempRSI = getRSI();
+        std::vector<double> tempVec;
+        auto tempRSI = getRSI();
 
 
         for(int i = 13; i <tempRSI.size(); i++) {
