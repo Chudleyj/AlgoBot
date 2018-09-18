@@ -5,145 +5,145 @@ std::mutex _mtx;
 void JSONdata::setOpen(const double &temp)
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        open.push_back(temp);
+        pricingData.open.push_back(temp);
 }
 
 void JSONdata::setHigh(const double &temp)
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        high.push_back(temp);
+        pricingData.high.push_back(temp);
 }
 
 void JSONdata::setLow(const double &temp)
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        low.push_back(temp);
+        pricingData.low.push_back(temp);
 }
 
 void JSONdata::setClose(const double &temp)
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        close.push_back(temp);
+        pricingData.close.push_back(temp);
 }
 
 void JSONdata::setChange(const double &temp)
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        change.push_back(temp);
+        pricingData.change.push_back(temp);
 }
 
 void JSONdata::setChgPer(const double &temp)
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        changePercent.push_back(temp);
+        pricingData.changePercent.push_back(temp);
 }
 
 void JSONdata::setVmap(const double &temp)
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        vmap.push_back(temp);
+        pricingData.vmap.push_back(temp);
 }
 
 void JSONdata::setChgOvrTime(const double &temp)
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        changeOverTime.push_back(temp);
+        pricingData.changeOverTime.push_back(temp);
 }
 
 void JSONdata::setDate(const std::string &temp)
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        date.push_back(temp);
+        pricingData.date.push_back(temp);
 }
 
 void JSONdata::setLabel(const std::string &temp)
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        label.push_back(temp);
+        pricingData.label.push_back(temp);
 }
 
 void JSONdata::setVol(const long long &temp)
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        volume.push_back(temp);
+        pricingData.volume.push_back(temp);
 }
 
 void JSONdata::setUnAdjVol(const long long &temp)
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        unadjustedVolume.push_back(temp);
+        pricingData.unadjustedVolume.push_back(temp);
 }
 
 std::vector<double> JSONdata::getOpen() const
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        return open;
+        return pricingData.open;
 }
 
 std::vector<double> JSONdata::getHigh() const
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        return high;
+        return pricingData.high;
 }
 
 std::vector<double> JSONdata::getLow() const
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        return low;
+        return pricingData.low;
 }
 
 std::vector<double> JSONdata::getClose() const
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        return close;
+        return pricingData.close;
 }
 
 std::vector<double> JSONdata::getChange() const
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        return change;
+        return pricingData.change;
 }
 
 std::vector<double> JSONdata::getChgPer() const
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        return changePercent;
+        return pricingData.changePercent;
 }
 
 std::vector<double> JSONdata::getVmap() const
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        return vmap;
+        return pricingData.vmap;
 }
 
 std::vector<double> JSONdata::getChgOvrTime() const
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        return changeOverTime;
+        return pricingData.changeOverTime;
 }
 
 std::vector<std::string> JSONdata::getDate() const
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        return date;
+        return pricingData.date;
 }
 
 std::vector<std::string> JSONdata::getLabel() const
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        return label;
+        return pricingData.label;
 }
 
 std::vector<long long> JSONdata::getVol() const
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        return volume;
+        return pricingData.volume;
 }
 
 std::vector<long long> JSONdata::getUnAdjVol() const
 {
         std::lock_guard<std::mutex> guard(_mtx);
-        return unadjustedVolume;
+        return pricingData.unadjustedVolume;
 }
 
 void JSONdata::parseIEXdata(const Json::Value &IEXdata)
@@ -173,57 +173,57 @@ void JSONdata::parseIEXdata(const Json::Value &IEXdata)
 }
 
 void JSONdata::clearJSONstruct(){
-        open.clear();
-        high.clear();
-        low.clear();
-        close.clear();
-        change.clear();
-        changePercent.clear();
-        changePercent.clear();
-        vmap.clear();
-        changeOverTime.clear();
-        date.clear();
-        label.clear();
-        volume.clear();
-        unadjustedVolume.clear();
+        pricingData.open.clear();
+        pricingData.high.clear();
+        pricingData.low.clear();
+        pricingData.close.clear();
+        pricingData.change.clear();
+        pricingData.changePercent.clear();
+        pricingData.changePercent.clear();
+        pricingData.vmap.clear();
+        pricingData.changeOverTime.clear();
+        pricingData.date.clear();
+        pricingData.label.clear();
+        pricingData.volume.clear();
+        pricingData.unadjustedVolume.clear();
 }
 
 bool JSONdata::isEmpty() const
 {
-        if(!open.empty())
+        if(!pricingData.open.empty())
                 return false;
 
-        else if(!high.empty())
+        else if(!pricingData.high.empty())
                 return false;
 
-        else if(!low.empty())
+        else if(!pricingData.low.empty())
                 return false;
 
-        else if(!close.empty())
+        else if(!pricingData.close.empty())
                 return false;
 
-        else if(!change.empty())
+        else if(!pricingData.change.empty())
                 return false;
 
-        else if(!changePercent.empty())
+        else if(!pricingData.changePercent.empty())
                 return false;
 
-        else if(!vmap.empty())
+        else if(!pricingData.vmap.empty())
                 return false;
 
-        else if(!changeOverTime.empty())
+        else if(!pricingData.changeOverTime.empty())
                 return false;
 
-        else if(!date.empty())
+        else if(!pricingData.date.empty())
                 return false;
 
-        else if(!label.empty())
+        else if(!pricingData.label.empty())
                 return false;
 
-        else if(!volume.empty())
+        else if(!pricingData.volume.empty())
                 return false;
 
-        else if(!unadjustedVolume.empty())
+        else if(!pricingData.unadjustedVolume.empty())
                 return false;
 
         else

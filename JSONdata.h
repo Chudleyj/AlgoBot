@@ -10,9 +10,12 @@
 //Stores data points fetched from IEX API JSON file
 //One struct per JSON entry
 class JSONdata {
-std::vector <double> open, high, low, close, change, changePercent, vmap, changeOverTime;
-std::vector <std::string> date, label;
-std::vector <long long> volume, unadjustedVolume;
+  struct priceData
+  {
+    std::vector <double> open, high, low, close, change, changePercent, vmap, changeOverTime;
+    std::vector <std::string> date, label;
+    std::vector <long long> volume, unadjustedVolume;
+  }pricingData;
 
 public:
 void setOpen(const double &);

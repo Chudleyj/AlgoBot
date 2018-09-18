@@ -17,22 +17,26 @@
 //Calculates values of TechnicalIndicators and stores them
 class TechnicalAnalysis
 {
-std::vector<double> RSI, stochRSI,fiftySMA,hundredSMA,hundFifSMA,twoHundSMA,
-                    fiftyEMA, hundredEMA, hundFifEMA, twoHundEMA, stdDeviation;
+  struct TechnicalIndicators
+  {
+      std::vector<double> RSI, stochRSI,fiftySMA,hundredSMA,hundFifSMA,twoHundSMA,
+      fiftyEMA, hundredEMA, hundFifEMA, twoHundEMA, stdDeviation;
+  } indicators;
+  
 public:
 
-std::vector<double> getRSI();
-std::vector<double> getStoch();
+std::vector<double> getRSI() const;
+std::vector<double> getStoch() const;
 
-std::vector<double> getFifSMA();
-std::vector<double> getHundSMA();
-std::vector<double> getHundFifSMA();
-std::vector<double> getTwoHundSMA();
+std::vector<double> getFifSMA() const;
+std::vector<double> getHundSMA() const;
+std::vector<double> getHundFifSMA() const;
+std::vector<double> getTwoHundSMA() const;
 
-std::vector<double> getFifEMA();
-std::vector<double> getHundEMA();
-std::vector<double> getHundFifEMA();
-std::vector<double> getTwoHundEMA();
+std::vector<double> getFifEMA() const;
+std::vector<double> getHundEMA() const;
+std::vector<double> getHundFifEMA() const;
+std::vector<double> getTwoHundEMA() const;
 
 void setFifSMA(const double &);
 void setHundSMA(const double &);
