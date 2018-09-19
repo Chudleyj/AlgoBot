@@ -128,16 +128,16 @@ void TechnicalAnalysis::setStoch(const double &temp)
 /*-------------------- END SETS --------------------*/
 void TechnicalAnalysis::clearTAobj()
 {
-        indicators.RSI.setRSI(0);
-        indicators.stochRSI.setStoch(0);
-        indicators.fiftySMA.setFifSMA(0);
-        indicators.hundredSMA.setHundSMA(0);
-        indicators.hundFifSMA.setHundFifSMA(0);
-        indicators.twoHundSMA.setTwoHundSMA(0);
-        indicators.fiftyEMA.setFifEMA(0);
-        indicators.hundredEMA.setHundEMA(0);
-        indicators.hundFifEMA.setHundFifEMA(0);
-        indicators.twoHundEMA.twoHundEMA(0);
+        indicators.RSI.clear();
+        indicators.stochRSI.clear();
+        indicators.fiftySMA.clear();
+        indicators.hundredSMA.clear();
+        indicators.hundFifSMA.clear();
+        indicators.twoHundSMA.clear();
+        indicators.fiftyEMA.clear();
+        indicators.hundredEMA.clear();
+        indicators.hundFifEMA.clear();
+        indicators.twoHundEMA.clear();
         indicators.stdDeviation.clear();
 }
 
