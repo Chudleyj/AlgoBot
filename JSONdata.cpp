@@ -173,19 +173,18 @@ void JSONdata::parseIEXdata(const Json::Value &IEXdata)
 }
 
 void JSONdata::clearJSONstruct(){
-        pricingData.open.clear();
-        pricingData.high.clear();
-        pricingData.low.clear();
-        pricingData.close.clear();
-        pricingData.change.clear();
-        pricingData.changePercent.clear();
-        pricingData.changePercent.clear();
-        pricingData.vmap.clear();
-        pricingData.changeOverTime.clear();
-        pricingData.date.clear();
-        pricingData.label.clear();
-        pricingData.volume.clear();
-        pricingData.unadjustedVolume.clear();
+        pricingData.open.setOpen(0);
+        pricingData.high.setHigh(0);
+        pricingData.low.setLow(0);
+        pricingData.close.setClose(0);
+        pricingData.change.setChange(0);
+        pricingData.changePercent.setChgPer(0);
+        pricingData.vmap.setVmap(0);
+        pricingData.changeOverTime.setChgOvrTime(0);
+        pricingData.date.setDate(0);
+        pricingData.label.setLabel(0);
+        pricingData.volume.setVol(0);
+        pricingData.unadjustedVolume.setUnAdjVol(0);
 }
 
 bool JSONdata::isEmpty() const

@@ -11,6 +11,7 @@ int main()
         while(1) {
                 //Use a seperate thread to update data for next calcs while current calcs are done.
                 std::thread t1(getAndParseData, std::ref(threadData),std::move("aapl"), std::move("1d"));
+                //Put all calcs onto threads, they all use thread safe methods for TIobj 
                 std::thread t2(&TechnicalAnalysis::calcRSI,TIobj,std::ref(minData));
                 std::thread t3(&TechnicalAnalysis::calcFiftySMA,TIobj,std::ref(minData));
                 std::thread t4(&TechnicalAnalysis::calcHundredSMA,TIobj,std::ref(minData));
@@ -22,6 +23,7 @@ int main()
                 std::thread t10(&TechnicalAnalysis::calcTwoHundEMA,TIobj,std::ref(minData));
 
                 t1.join(); //Rejoin main thread, adding new data for next calcs
+                //Rejoin all threads to clear data before next calcs
                 t2.join();
                 t3.join();
                 t4.join();
