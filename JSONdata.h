@@ -5,11 +5,13 @@
 #include <vector>
 #include <thread>
 #include <mutex>
+#include <boost/optional.hpp>
 #include <json/json.h>
 
 //Stores data points fetched from IEX API JSON file
 //One struct per JSON entry
-class JSONdata {
+class JSONdata
+{
   struct priceData
   {
     std::vector <double> open, high, low, close, change, changePercent, vmap, changeOverTime;
@@ -18,6 +20,42 @@ class JSONdata {
   }pricingData;
 
 public:
+void accessUnAdjVol(boost::optional<std::vector<long long>&> EMPTY_VEC = boost::none,
+                    boost::optional<long long> TEMP = boost::none);
+
+void accessVol(boost::optional<std::vector<long long>&> EMPTY_VEC = boost::none,
+               boost::optional<long long> TEMP = boost::none);
+
+void accessLabel(boost::optional<std::vector<std::string>&> EMPTY_VEC = boost::none,
+                 boost::optional<std::string> TEMP = boost::none);
+
+void accessDate(boost::optional<std::vector<std::string>&> EMPTY_VEC = boost::none,
+                boost::optional<std::string> TEMP = boost::none);
+
+void accessChgOvrTime(boost::optional<std::vector<double>&> EMPTY_VEC = boost::none,
+                      boost::optional<double> TEMP = boost::none);
+
+void accessVmap(boost::optional<std::vector<double>&> EMPTY_VEC = boost::none,
+                boost::optional<double> TEMP = boost::none);
+
+void accessChgPer(boost::optional<std::vector<double>&> EMPTY_VEC = boost::none,
+                  boost::optional<double> TEMP = boost::none);
+
+void accessChange(boost::optional<std::vector<double>&> EMPTY_VEC = boost::none,
+                  boost::optional<double> TEMP = boost::none);
+
+void accessClose(boost::optional<std::vector<double>&> EMPTY_VEC = boost::none,
+                 boost::optional<double> TEMP = boost::none);
+
+void accessLow(boost::optional<std::vector<double>&> EMPTY_VEC = boost::none,
+               boost::optional<double> TEMP = boost::none);
+
+void accessHigh(boost::optional<std::vector<double>&> EMPTY_VEC = boost::none,
+                boost::optional<double> TEMP = boost::none);
+
+void accessOpen(boost::optional<std::vector<double>&> EMPTY_VEC = boost::none,
+                boost::optional<double> TEMP = boost::none);
+
 void setOpen(const double &);
 void setHigh(const double &);
 void setLow(const double &);
@@ -33,20 +71,20 @@ void setLabel(const std::string &);
 void setVol(const long long &);
 void setUnAdjVol(const long long &);
 
-std::vector<double> getOpen() const;
-std::vector<double> getHigh() const;
-std::vector<double> getLow() const;
-std::vector<double> getClose() const;
-std::vector<double> getChange() const;
-std::vector<double> getChgPer() const;
-std::vector<double> getVmap() const;
-std::vector<double> getChgOvrTime() const;
+void getOpen(std::vector<double> &) const;
+void getHigh(std::vector<double> &) const;
+void getLow(std::vector<double> &) const;
+void getClose(std::vector<double> &) const;
+void getChange(std::vector<double> &) const;
+void getChgPer(std::vector<double> &) const;
+void getVmap(std::vector<double> &) const;
+void getChgOvrTime(std::vector<double> &) const;
 
-std::vector<std::string> getDate() const;
-std::vector<std::string> getLabel() const;
+void getDate(std::vector<std::string> &) const;
+void getLabel(std::vector<std::string> &) const;
 
-std::vector<long long> getVol() const;
-std::vector<long long> getUnAdjVol() const;
+void getVol(std::vector<long long> &) const;
+void getUnAdjVol(std::vector<long long> &) const;
 
 
 bool isEmpty() const;

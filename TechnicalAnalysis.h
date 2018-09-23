@@ -7,12 +7,11 @@
 #include <assert.h>
 #include <thread>
 #include <mutex>
+#include <boost/optional.hpp>
 #include "JSONdata.h"
 
 //TODO: add more Technical Indicators
 //Holds all TI values in vectors
-
-
 
 //Calculates values of TechnicalIndicators and stores them
 class TechnicalAnalysis
@@ -21,22 +20,51 @@ class TechnicalAnalysis
   {
       std::vector<double> RSI, stochRSI,fiftySMA,hundredSMA,hundFifSMA,twoHundSMA,
       fiftyEMA, hundredEMA, hundFifEMA, twoHundEMA, stdDeviation;
-  } indicators;
-  
+  }indicators;
+
 public:
+void accessRSI(boost::optional<std::vector<double>&> copy = boost::none,
+               boost::optional<double> temp = boost::none);
 
-std::vector<double> getRSI() const;
-std::vector<double> getStoch() const;
+void accessStoch(boost::optional<std::vector<double>&> EMPTY_VEC = boost::none,
+                 boost::optional<double> temp = boost::none);
 
-std::vector<double> getFifSMA() const;
-std::vector<double> getHundSMA() const;
-std::vector<double> getHundFifSMA() const;
-std::vector<double> getTwoHundSMA() const;
+void accessFifSMA(boost::optional<std::vector<double>&> EMPTY_VEC = boost::none,
+                  boost::optional<double> temp = boost::none);
 
-std::vector<double> getFifEMA() const;
-std::vector<double> getHundEMA() const;
-std::vector<double> getHundFifEMA() const;
-std::vector<double> getTwoHundEMA() const;
+void accessHundSMA(boost::optional<std::vector<double>&> EMPTY_VEC = boost::none,
+                   boost::optional<double> temp = boost::none);
+
+void accessHundFifSMA(boost::optional<std::vector<double>&> EMPTY_VEC = boost::none,
+                      boost::optional<double> temp = boost::none);
+
+void accessTwoHundSMA(boost::optional<std::vector<double>&> EMPTY_VEC = boost::none,
+                      boost::optional<double> temp = boost::none);
+
+void accessFifEMA(boost::optional<std::vector<double>&> EMPTY_VEC = boost::none,
+                  boost::optional<double> temp = boost::none);
+
+void accessHundEMA(boost::optional<std::vector<double>&> EMPTY_VEC = boost::none,
+                   boost::optional<double> temp = boost::none);
+
+void accessHundFifEMA(boost::optional<std::vector<double>&> EMPTY_VEC = boost::none,
+                      boost::optional<double> temp = boost::none);
+
+void accessTwoHundEMA(boost::optional<std::vector<double>&> EMPTY_VEC = boost::none,
+                      boost::optional<double> temp = boost::none);
+
+void getRSI(std::vector<double> &) const;
+void getStoch(std::vector<double> &) const;
+
+void getFifSMA(std::vector<double> &) const;
+void getHundSMA(std::vector<double> &) const;
+void getHundFifSMA(std::vector<double> &) const;
+void getTwoHundSMA(std::vector<double> &) const;
+
+void getFifEMA(std::vector<double> &) const;
+void getHundEMA(std::vector<double> &) const;
+void getHundFifEMA(std::vector<double> &) const;
+void getTwoHundEMA(std::vector<double> &) const;
 
 void setFifSMA(const double &);
 void setHundSMA(const double &);
@@ -51,17 +79,17 @@ void setTwoHundEMA(const double &);
 void setRSI(const double &);
 void setStoch(const double &);
 
-void calcFiftySMA(const JSONdata &);
-void calcHundredSMA(const JSONdata &);
-void calcHundFiftySMA(const JSONdata &);
-void calcTwoHundSMA(const JSONdata &);
+void calcFiftySMA(JSONdata &);
+void calcHundredSMA(JSONdata &);
+void calcHundFiftySMA(JSONdata &);
+void calcTwoHundSMA(JSONdata &);
 
-void calcFiftyEMA(const JSONdata &);
-void calcHundredEMA(const JSONdata &);
-void calcHundFiftyEMA(const JSONdata &);
-void calcTwoHundEMA(const JSONdata &);
+void calcFiftyEMA(JSONdata &);
+void calcHundredEMA(JSONdata &);
+void calcHundFiftyEMA(JSONdata &);
+void calcTwoHundEMA(JSONdata &);
 
-void calcRSI(const JSONdata &);
+void calcRSI(JSONdata &);
 void calcStochRSI();
 
 void clearTAobj();

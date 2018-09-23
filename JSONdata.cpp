@@ -2,148 +2,255 @@
 
 std::mutex _mtx;
 
+
+void JSONdata::accessUnAdjVol(boost::optional<std::vector<long long>&> copy,
+                              boost::optional<long long> temp)
+{
+  std::lock_guard<std::mutex> guard(_mtx);
+  if(temp)
+    setUnAdjVol(*temp);
+  else if(copy)
+    getUnAdjVol(*copy);
+}
+
+void JSONdata::accessVol(boost::optional<std::vector<long long>&> copy,
+                         boost::optional<long long> temp)
+{
+  std::lock_guard<std::mutex> guard(_mtx);
+  if(temp)
+    setVol(*temp);
+  else if(copy)
+    getVol(*copy);
+}
+
+void JSONdata::accessLabel(boost::optional<std::vector<std::string>&> copy,
+                           boost::optional<std::string> temp)
+{
+  std::lock_guard<std::mutex> guard(_mtx);
+  if(temp)
+    setLabel(*temp);
+  else if(copy)
+    getLabel(*copy);
+}
+
+void JSONdata::accessDate(boost::optional<std::vector<std::string>&> copy,
+                          boost::optional<std::string> temp)
+{
+  std::lock_guard<std::mutex> guard(_mtx);
+  if(temp)
+    setDate(*temp);
+  else if(copy)
+    getDate(*copy);
+}
+
+void JSONdata::accessChgOvrTime(boost::optional<std::vector<double>&> copy,
+                                boost::optional<double> temp)
+{
+  std::lock_guard<std::mutex> guard(_mtx);
+  if(temp)
+    setChgOvrTime(*temp);
+  else if(copy)
+    getChgOvrTime(*copy);
+}
+
+void JSONdata::accessVmap(boost::optional<std::vector<double>&> copy,
+                          boost::optional<double> temp)
+{
+  std::lock_guard<std::mutex> guard(_mtx);
+  if(temp)
+    setVmap(*temp);
+  else if(copy)
+    getVmap(*copy);
+}
+
+void JSONdata::accessChgPer(boost::optional<std::vector<double>&> copy,
+                            boost::optional<double> temp)
+{
+  std::lock_guard<std::mutex> guard(_mtx);
+  if(temp)
+    setChgPer(*temp);
+  else if(copy)
+    getChgPer(*copy);
+}
+
+void JSONdata::accessChange(boost::optional<std::vector<double>&> copy,
+                            boost::optional<double> temp)
+{
+  std::lock_guard<std::mutex> guard(_mtx);
+  if(temp)
+    setChange(*temp);
+  else if(copy)
+    getChange(*copy);
+}
+
+void JSONdata::accessClose(boost::optional<std::vector<double>&> copy,
+                           boost::optional<double> temp)
+{
+  std::lock_guard<std::mutex> guard(_mtx);
+  if(temp)
+    setClose(*temp);
+  else if(copy)
+    getClose(*copy);
+}
+
+void JSONdata::accessLow(boost::optional<std::vector<double>&> copy,
+                         boost::optional<double> temp)
+{
+  std::lock_guard<std::mutex> guard(_mtx);
+  if(temp)
+    setLow(*temp);
+  else if(copy)
+    getLow(*copy);
+}
+
+void JSONdata::accessHigh(boost::optional<std::vector<double>&> copy,
+                          boost::optional<double> temp)
+{
+  std::lock_guard<std::mutex> guard(_mtx);
+  if(temp)
+    setHigh(*temp);
+  else if(copy)
+    getHigh(*copy);
+}
+
+void JSONdata::accessOpen(boost::optional<std::vector<double>&> copy,
+                          boost::optional<double> temp)
+{
+  std::lock_guard<std::mutex> guard(_mtx);
+  if(temp)
+    setOpen(*temp);
+  else if(copy)
+    getOpen(*copy);
+}
+
 void JSONdata::setOpen(const double &temp)
 {
-        std::lock_guard<std::mutex> guard(_mtx);
         pricingData.open.push_back(temp);
 }
 
 void JSONdata::setHigh(const double &temp)
 {
-        std::lock_guard<std::mutex> guard(_mtx);
         pricingData.high.push_back(temp);
 }
 
 void JSONdata::setLow(const double &temp)
 {
-        std::lock_guard<std::mutex> guard(_mtx);
         pricingData.low.push_back(temp);
 }
 
 void JSONdata::setClose(const double &temp)
 {
-        std::lock_guard<std::mutex> guard(_mtx);
         pricingData.close.push_back(temp);
 }
 
 void JSONdata::setChange(const double &temp)
 {
-        std::lock_guard<std::mutex> guard(_mtx);
         pricingData.change.push_back(temp);
 }
 
 void JSONdata::setChgPer(const double &temp)
 {
-        std::lock_guard<std::mutex> guard(_mtx);
         pricingData.changePercent.push_back(temp);
 }
 
 void JSONdata::setVmap(const double &temp)
 {
-        std::lock_guard<std::mutex> guard(_mtx);
         pricingData.vmap.push_back(temp);
 }
 
 void JSONdata::setChgOvrTime(const double &temp)
 {
-        std::lock_guard<std::mutex> guard(_mtx);
         pricingData.changeOverTime.push_back(temp);
 }
 
 void JSONdata::setDate(const std::string &temp)
 {
-        std::lock_guard<std::mutex> guard(_mtx);
         pricingData.date.push_back(temp);
 }
 
 void JSONdata::setLabel(const std::string &temp)
 {
-        std::lock_guard<std::mutex> guard(_mtx);
         pricingData.label.push_back(temp);
 }
 
 void JSONdata::setVol(const long long &temp)
 {
-        std::lock_guard<std::mutex> guard(_mtx);
         pricingData.volume.push_back(temp);
 }
 
 void JSONdata::setUnAdjVol(const long long &temp)
 {
-        std::lock_guard<std::mutex> guard(_mtx);
         pricingData.unadjustedVolume.push_back(temp);
 }
 
-std::vector<double> JSONdata::getOpen() const
+void JSONdata::getOpen(std::vector <double> &copy) const
 {
-        std::lock_guard<std::mutex> guard(_mtx);
-        return pricingData.open;
+        copy = pricingData.open;
 }
 
-std::vector<double> JSONdata::getHigh() const
+void JSONdata::getHigh(std::vector <double> &copy) const
 {
-        std::lock_guard<std::mutex> guard(_mtx);
-        return pricingData.high;
+
+        copy = pricingData.high;
 }
 
-std::vector<double> JSONdata::getLow() const
+void JSONdata::getLow(std::vector <double> &copy) const
 {
-        std::lock_guard<std::mutex> guard(_mtx);
-        return pricingData.low;
+
+        copy = pricingData.low;
 }
 
-std::vector<double> JSONdata::getClose() const
+void JSONdata::getClose(std::vector <double> &copy) const
 {
-        std::lock_guard<std::mutex> guard(_mtx);
-        return pricingData.close;
+
+        copy = pricingData.close;
 }
 
-std::vector<double> JSONdata::getChange() const
+void JSONdata::getChange(std::vector <double> &copy) const
 {
-        std::lock_guard<std::mutex> guard(_mtx);
-        return pricingData.change;
+
+        copy = pricingData.change;
 }
 
-std::vector<double> JSONdata::getChgPer() const
+void JSONdata::getChgPer(std::vector <double> &copy) const
 {
-        std::lock_guard<std::mutex> guard(_mtx);
-        return pricingData.changePercent;
+
+        copy = pricingData.changePercent;
 }
 
-std::vector<double> JSONdata::getVmap() const
+void JSONdata::getVmap(std::vector <double> &copy) const
 {
-        std::lock_guard<std::mutex> guard(_mtx);
-        return pricingData.vmap;
+
+        copy = pricingData.vmap;
 }
 
-std::vector<double> JSONdata::getChgOvrTime() const
+void JSONdata::getChgOvrTime(std::vector <double> &copy) const
 {
-        std::lock_guard<std::mutex> guard(_mtx);
-        return pricingData.changeOverTime;
+
+        copy = pricingData.changeOverTime;
 }
 
-std::vector<std::string> JSONdata::getDate() const
+void JSONdata::getDate(std::vector<std::string> &copy) const
 {
-        std::lock_guard<std::mutex> guard(_mtx);
-        return pricingData.date;
+
+        copy = pricingData.date;
 }
 
-std::vector<std::string> JSONdata::getLabel() const
+void JSONdata::getLabel(std::vector<std::string> &copy) const
 {
-        std::lock_guard<std::mutex> guard(_mtx);
-        return pricingData.label;
+
+        copy = pricingData.label;
 }
 
-std::vector<long long> JSONdata::getVol() const
+void JSONdata::getVol(std::vector<long long> &copy) const
 {
-        std::lock_guard<std::mutex> guard(_mtx);
-        return pricingData.volume;
+
+        copy = pricingData.volume;
 }
 
-std::vector<long long> JSONdata::getUnAdjVol() const
+void JSONdata::getUnAdjVol(std::vector<long long> &copy) const
 {
-        std::lock_guard<std::mutex> guard(_mtx);
-        return pricingData.unadjustedVolume;
+        copy = pricingData.unadjustedVolume;
 }
 
 void JSONdata::parseIEXdata(const Json::Value &IEXdata)
@@ -151,23 +258,45 @@ void JSONdata::parseIEXdata(const Json::Value &IEXdata)
         assert(!IEXdata.empty());
         assert(isEmpty());
         int i = 0;
+        double temp;
+        long long temp_lng;
+        std::string temp_str;
 
         //Step through JSON file until the end is reached
         while(i < IEXdata.size()) {
                 //Parse the JSON data into the struct
-                setOpen(IEXdata[i]["open"].asDouble());
-                setHigh(IEXdata[i]["high"].asDouble());
-                setLow(IEXdata[i]["low"].asDouble());
-                setClose(IEXdata[i]["close"].asDouble());
-                setVol(IEXdata[i]["volume"].asInt64());
-                setUnAdjVol(IEXdata[i]["unadjustedVolume"].asInt64());
-                setChange(IEXdata[i]["change"].asDouble());
-                setChgPer(IEXdata[i]["changePercent"].asDouble());
-                setVmap(IEXdata[i]["vmap"].asDouble());
-                setChgOvrTime(IEXdata[i]["changeOverTime"].asDouble());
-                setDate(IEXdata[i]["date"].asString());
-                setLabel(IEXdata[i]["label"].asString());
+                temp = IEXdata[i]["open"].asDouble();
+                accessOpen(boost::none, temp);
 
+                temp = IEXdata[i]["low"].asDouble();
+                accessLow(boost::none, temp);
+
+                temp = IEXdata[i]["close"].asDouble();
+                accessClose(boost::none, temp);
+
+                temp = IEXdata[i]["change"].asDouble();
+                accessChange(boost::none, temp);
+
+                temp = IEXdata[i]["changePercent"].asDouble();
+                accessChgPer(boost::none, temp);
+
+                temp = IEXdata[i]["vmap"].asDouble();
+                accessVmap(boost::none, temp);
+
+                temp = IEXdata[i]["changeOverTime"].asDouble();
+                accessChgOvrTime(boost::none, temp);
+
+                temp_lng = IEXdata[i]["volume"].asInt64();
+                accessVol(boost::none, temp_lng);
+
+                temp_lng = IEXdata[i]["unadjustedVolume"].asInt64();
+                accessUnAdjVol(boost::none, temp_lng);
+
+                temp_str = IEXdata[i]["date"].asString();
+                accessDate(boost::none, temp_str);
+
+                temp_str = IEXdata[i]["date"].asString();
+                accessLabel(boost::none,temp_str);
                 i++;
         }
 }

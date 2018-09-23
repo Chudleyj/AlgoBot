@@ -1,146 +1,5 @@
 #include "TechnicalAnalysis.h"
 
-
-std::mutex mtx;
-
-/*-------------------- START GETS --------------------*/
-std::vector<double> TechnicalAnalysis::getRSI() const
-{
-        std::lock_guard<std::mutex> guard(mtx);
-        return indicators.RSI;
-}
-
-std::vector<double> TechnicalAnalysis::getStoch() const
-{
-        std::lock_guard<std::mutex> guard(mtx);
-        return indicators.stochRSI;
-}
-
-std::vector<double> TechnicalAnalysis::getFifSMA() const
-{
-        std::lock_guard<std::mutex> guard(mtx);
-        return indicators.fiftySMA;
-}
-
-std::vector<double> TechnicalAnalysis::getHundSMA() const
-{
-        std::lock_guard<std::mutex> guard(mtx);
-        return indicators.hundredSMA;
-}
-
-std::vector<double> TechnicalAnalysis::getHundFifSMA() const
-{
-        std::lock_guard<std::mutex> guard(mtx);
-        return indicators.hundFifSMA;
-}
-
-std::vector<double> TechnicalAnalysis::getTwoHundSMA() const
-{
-        std::lock_guard<std::mutex> guard(mtx);
-        return indicators.twoHundSMA;
-}
-
-std::vector<double> TechnicalAnalysis::getFifEMA() const
-{
-        std::lock_guard<std::mutex> guard(mtx);
-        return indicators.fiftyEMA;
-}
-
-std::vector<double> TechnicalAnalysis::getHundEMA() const
-{
-        std::lock_guard<std::mutex> guard(mtx);
-        return indicators.hundredEMA;
-}
-
-std::vector<double> TechnicalAnalysis::getHundFifEMA() const
-{
-        std::lock_guard<std::mutex> guard(mtx);
-        return indicators.hundFifEMA;
-}
-
-std::vector<double> TechnicalAnalysis::getTwoHundEMA() const
-{
-        std::lock_guard<std::mutex> guard(mtx);
-        return indicators.twoHundEMA;
-}
-/*-------------------- END GETS --------------------*/
-
-/*-------------------- START SETS --------------------*/
-void TechnicalAnalysis::setFifSMA(const double &temp)
-{
-        std::lock_guard<std::mutex> guard(mtx);
-        indicators.fiftySMA.push_back(temp);
-}
-
-void TechnicalAnalysis::setHundSMA(const double &temp)
-{
-        std::lock_guard<std::mutex> guard(mtx);
-        indicators.hundredSMA.push_back(temp);
-}
-
-void TechnicalAnalysis::setHundFifSMA(const double &temp)
-{
-        std::lock_guard<std::mutex> guard(mtx);
-        indicators.hundFifSMA.push_back(temp);
-}
-
-void TechnicalAnalysis::setTwoHundSMA(const double &temp)
-{
-        std::lock_guard<std::mutex> guard(mtx);
-        indicators.twoHundSMA.push_back(temp);
-}
-
-void TechnicalAnalysis::setFifEMA(const double &temp)
-{
-        std::lock_guard<std::mutex> guard(mtx);
-        indicators.fiftyEMA.push_back(temp);
-}
-
-void TechnicalAnalysis::setHundEMA(const double &temp)
-{
-        std::lock_guard<std::mutex> guard(mtx);
-        indicators.hundredEMA.push_back(temp);
-}
-
-void TechnicalAnalysis::setHundFifEMA(const double &temp)
-{
-        std::lock_guard<std::mutex> guard(mtx);
-        indicators.hundFifEMA.push_back(temp);
-}
-
-void TechnicalAnalysis::setTwoHundEMA(const double &temp)
-{
-        std::lock_guard<std::mutex> guard(mtx);
-        indicators.twoHundEMA.push_back(temp);
-}
-
-void TechnicalAnalysis::setRSI(const double &temp)
-{
-        std::lock_guard<std::mutex> guard(mtx);
-        indicators.RSI.push_back(temp);
-}
-
-void TechnicalAnalysis::setStoch(const double &temp)
-{
-        std::lock_guard<std::mutex> guard(mtx);
-        indicators.stochRSI.push_back(temp);
-}
-/*-------------------- END SETS --------------------*/
-void TechnicalAnalysis::clearTAobj()
-{
-        indicators.RSI.clear();
-        indicators.stochRSI.clear();
-        indicators.fiftySMA.clear();
-        indicators.hundredSMA.clear();
-        indicators.hundFifSMA.clear();
-        indicators.twoHundSMA.clear();
-        indicators.fiftyEMA.clear();
-        indicators.hundredEMA.clear();
-        indicators.hundFifEMA.clear();
-        indicators.twoHundEMA.clear();
-        indicators.stdDeviation.clear();
-}
-
 /*
    void TechnicalAnalysis::calcSD()
    {
@@ -160,13 +19,14 @@ void TechnicalAnalysis::clearTAobj()
  */
 /*-------------------- START EMAs --------------------*/
 
-void TechnicalAnalysis::calcFiftyEMA(const JSONdata &HistoricalData)
+void TechnicalAnalysis::calcFiftyEMA(JSONdata &HistoricalData)
 {
         assert(!HistoricalData.isEmpty());
 
         double SMA = 0.0, sum = 0.0, multipler = 0.0;
         int period = 50, j = 0;
-        auto closePrices= HistoricalData.getClose();
+        std::vector<double> closePrices;
+        HistoricalData.accessClose(closePrices);
 
         if(closePrices.size() <= period){
           std::cout<<std::endl <<"NOT ENOUGH DATA FOR " << period << " DAY EMA YET";
@@ -190,13 +50,15 @@ void TechnicalAnalysis::calcFiftyEMA(const JSONdata &HistoricalData)
         }
 }
 
-void TechnicalAnalysis::calcHundredEMA(const JSONdata &HistoricalData)
+void TechnicalAnalysis::calcHundredEMA(JSONdata &HistoricalData)
 {
         assert(!HistoricalData.isEmpty());
 
         double SMA = 0.0, sum = 0.0, multipler = 0.0;
         int period = 100, j = 0;
-        auto closePrices= HistoricalData.getClose();
+        std::vector<double> closePrices;
+        HistoricalData.accessClose(closePrices);
+
 
         if(closePrices.size() <= period){
           std::cout<<std::endl <<"NOT ENOUGH DATA FOR " << period << " DAY EMA YET";
@@ -220,13 +82,14 @@ void TechnicalAnalysis::calcHundredEMA(const JSONdata &HistoricalData)
         }
 }
 
-void TechnicalAnalysis::calcHundFiftyEMA(const JSONdata &HistoricalData)
+void TechnicalAnalysis::calcHundFiftyEMA(JSONdata &HistoricalData)
 {
         assert(!HistoricalData.isEmpty());
 
         double SMA = 0.0, sum = 0.0, multipler = 0.0;
         int period = 150, j = 0;
-        auto closePrices= HistoricalData.getClose();
+        std::vector<double> closePrices;
+        HistoricalData.accessClose(closePrices);
 
         if(closePrices.size() <= period){
           std::cout<<std::endl <<"NOT ENOUGH DATA FOR " << period << " DAY EMA YET";
@@ -250,12 +113,13 @@ void TechnicalAnalysis::calcHundFiftyEMA(const JSONdata &HistoricalData)
         }
 }
 
-void TechnicalAnalysis::calcTwoHundEMA(const JSONdata &HistoricalData)
+void TechnicalAnalysis::calcTwoHundEMA(JSONdata &HistoricalData)
 {
         assert(!HistoricalData.isEmpty());
         double SMA = 0.0, sum = 0.0, multipler = 0.0;
         int period = 200, j = 0;
-        auto closePrices = HistoricalData.getClose();
+        std::vector<double> closePrices;
+        HistoricalData.accessClose(closePrices);
 
         if(closePrices.size() <= period){
           std::cout<<std::endl <<"NOT ENOUGH DATA FOR " << period << " DAY EMA YET";
@@ -283,13 +147,14 @@ void TechnicalAnalysis::calcTwoHundEMA(const JSONdata &HistoricalData)
 
 
 /*-------------------- START SMAs --------------------*/
-void TechnicalAnalysis::calcFiftySMA(const JSONdata &HistoricalData)
+void TechnicalAnalysis::calcFiftySMA(JSONdata &HistoricalData)
 {
         assert(!HistoricalData.isEmpty());
         double sum;
         int period = 50;
 
-        auto closePrices = HistoricalData.getClose();
+        std::vector<double> closePrices;
+        HistoricalData.accessClose(closePrices,boost::none);
 
         if(closePrices.size() <= period){
           std::cout<<std::endl <<"NOT ENOUGH DATA FOR " << period << " DAY SMA YET";
@@ -307,13 +172,14 @@ void TechnicalAnalysis::calcFiftySMA(const JSONdata &HistoricalData)
 }
 
 
-void TechnicalAnalysis::calcHundredSMA(const JSONdata &HistoricalData)
+void TechnicalAnalysis::calcHundredSMA(JSONdata &HistoricalData)
 {
         assert(!HistoricalData.isEmpty());
         double sum;
         int period = 100;
 
-        auto closePrices= HistoricalData.getClose();
+        std::vector<double> closePrices;
+        HistoricalData.accessClose(closePrices);
 
         if(closePrices.size() <= period){
           std::cout<<std::endl <<"NOT ENOUGH DATA FOR " << period << " DAY SMA YET";
@@ -330,13 +196,14 @@ void TechnicalAnalysis::calcHundredSMA(const JSONdata &HistoricalData)
         }
 }
 
-void TechnicalAnalysis::calcHundFiftySMA(const JSONdata &HistoricalData)
+void TechnicalAnalysis::calcHundFiftySMA(JSONdata &HistoricalData)
 {
         assert(!HistoricalData.isEmpty());
         double sum;
         int period = 150;
 
-        auto closePrices = HistoricalData.getClose();
+        std::vector<double> closePrices;
+        HistoricalData.accessClose(closePrices);
 
         if(closePrices.size() <= period){
           std::cout<<std::endl <<"NOT ENOUGH DATA FOR " << period << " DAY SMA YET";
@@ -353,13 +220,14 @@ void TechnicalAnalysis::calcHundFiftySMA(const JSONdata &HistoricalData)
         }
 }
 
-void TechnicalAnalysis::calcTwoHundSMA(const JSONdata &HistoricalData)
+void TechnicalAnalysis::calcTwoHundSMA(JSONdata &HistoricalData)
 {
         assert(!HistoricalData.isEmpty());
         double sum;
         int period = 200;
 
-        auto closePrices = HistoricalData.getClose();
+        std::vector<double> closePrices;
+        HistoricalData.accessClose(closePrices);
 
         if(closePrices.size() <= period){
           std::cout<<std::endl <<"NOT ENOUGH DATA FOR " << period << " DAY SMA YET";
@@ -379,7 +247,7 @@ void TechnicalAnalysis::calcTwoHundSMA(const JSONdata &HistoricalData)
 
 
 /*-------------------- START RSI  --------------------*/
-void TechnicalAnalysis::calcRSI(const JSONdata &HistoricalData)
+void TechnicalAnalysis::calcRSI(JSONdata &HistoricalData)
 {
         assert(!HistoricalData.isEmpty());
 
@@ -389,7 +257,8 @@ void TechnicalAnalysis::calcRSI(const JSONdata &HistoricalData)
                                  };
 
         std::vector<long double> gain, loss, change, avgGain, avgLoss, RS;
-        auto closePrices = HistoricalData.getClose();
+        std::vector<double> closePrices;
+        HistoricalData.accessClose(closePrices);
 
         //We need these if/else statements so program works when there hasn't been 250 data points yet.
         if(closePrices.size() > 250) {
@@ -440,9 +309,8 @@ void TechnicalAnalysis::calcStochRSI()
                                     temp.push_back(RSI[loc-i]);
                     };
 
-        std::vector<double> tempVec;
-        auto tempRSI = getRSI();
-
+        std::vector<double> tempVec, tempRSI;
+        getRSI(tempRSI);
 
         for(int i = 13; i <tempRSI.size(); i++) {
                 copy(tempRSI,tempVec,i);
