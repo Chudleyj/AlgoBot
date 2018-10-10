@@ -8,8 +8,10 @@
 #include <boost/optional.hpp>
 #include <json/json.h>
 
-//Stores data points fetched from IEX API JSON file
-//One struct per JSON entry
+/* This class store the values of data fetched from the IEX::stocks::chartRange
+   function inside the priceData struct. It's member functions are
+   explain in the file JSONdata.cpp. The priceData struct is passed to the
+   TechnicalAnalysis class for calculations. */
 class JSONdata
 {
   struct priceData

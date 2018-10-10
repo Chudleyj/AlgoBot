@@ -11,18 +11,30 @@
 #include "JSONdata.h"
 
 //TODO: add more Technical Indicators
-//Holds all TI values in vectors
 
-//Calculates values of TechnicalIndicators and stores them
+/* This class stores the results of calculations done on the data from JSONdata
+   objects (mainly using closing price, but more to come). It stores these
+   results into the TechnicalIndicators struct. The calc functions each
+   calculate a different vector that is inside TechnicalIndicators struct. */
+
 class TechnicalAnalysis
 {
+  //Holds all TI values in vectors
   struct TechnicalIndicators
   {
       std::vector<double> RSI, stochRSI,fiftySMA,hundredSMA,hundFifSMA,twoHundSMA,
-      fiftyEMA, hundredEMA, hundFifEMA, twoHundEMA, stdDeviation;
+      fiftyEMA, hundredEMA, hundFifEMA, twoHundEMA, stdDeviation, MACD, MACD_Signal,
+      MACD_EMA;
   }indicators;
 
 public:
+
+void accessSignal(boost::optional<std::vector<double>&> copy = boost::none,
+                boost::optional<double> temp = boost::none);
+
+void accessMACD(boost::optional<std::vector<double>&> copy = boost::none,
+                boost::optional<double> temp = boost::none);
+
 void accessRSI(boost::optional<std::vector<double>&> copy = boost::none,
                boost::optional<double> temp = boost::none);
 
@@ -53,6 +65,10 @@ void accessHundFifEMA(boost::optional<std::vector<double>&> EMPTY_VEC = boost::n
 void accessTwoHundEMA(boost::optional<std::vector<double>&> EMPTY_VEC = boost::none,
                       boost::optional<double> temp = boost::none);
 
+void getMACD(std::vector<double> &) const;
+void getSignal(std::vector<double> &) const;
+
+
 void getRSI(std::vector<double> &) const;
 void getStoch(std::vector<double> &) const;
 
@@ -79,6 +95,10 @@ void setTwoHundEMA(const double &);
 void setRSI(const double &);
 void setStoch(const double &);
 
+void setMACD(const double &);
+void setSignal(const double &);
+
+//Functions below calculate values of TechnicalIndicators and stores them into TI struct
 void calcFiftySMA(JSONdata &);
 void calcHundredSMA(JSONdata &);
 void calcHundFiftySMA(JSONdata &);
@@ -91,6 +111,8 @@ void calcTwoHundEMA(JSONdata &);
 
 void calcRSI(JSONdata &);
 void calcStochRSI();
+
+void calcMACD(JSONdata &);
 
 void clearTAobj();
 };

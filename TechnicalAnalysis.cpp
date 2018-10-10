@@ -1,6 +1,6 @@
 #include "TechnicalAnalysis.h"
 
-/*
+/* TODO STILL UNDER CONSTRUCTION
    void TechnicalAnalysis::calcSD()
    {
     double sum = 0.0, mean, standardDeviation = 0.0;
@@ -17,8 +17,62 @@
    }
 
  */
-/*-------------------- START EMAs --------------------*/
 
+/* TODO MACD IS STILL UNDER CONSTRUCTION
+void TechnicalAnalysis::calcMACD(JSONdata &HistoricalData)
+{
+  assert(!HistoricalData.isEmpty());
+
+  calcMACD_EMA(HistoricalData, 26);
+  std::vector<double> 26_EMA = MACD_EMA;
+  MACD_EMA.clear();
+
+  calcMACD_EMA(HistoricalData, 12);
+  std::vector<double> 12_EMA = MACD_EMA;
+  MACD_EMA.clear();
+
+  for(int i = 0; i < 26_EMA.size(); i++)
+    accessMACD(12_EMA[i] - 26_EMA[i]);
+
+  calcMACD_EMA(HistoricalData, 9);
+
+  for(int i = 0; i < MACD_EMA.size(); i++)
+    accessSignal(MACD_EMA[i]);
+
+  MACD_EMA.clear();
+}
+
+//TODO this should probably be how all EMA/SMA's are done.
+void TechnicalAnalysis::calcMACD_EMA(JSONdata &HistoricalData, const int &period)
+{
+        assert(!HistoricalData.isEmpty());
+
+        double SMA = 0.0, sum = 0.0, multipler = 0.0;
+        int j = 0;
+        std::vector<double> closePrices;
+        HistoricalData.accessClose(closePrices);
+
+        if(closePrices.size() <= period){
+          std::cout<<std::endl <<"NOT ENOUGH DATA FOR " << period << " DAY EMA YET";
+          return;
+        }
+
+        for(int i = 0; i < period; i++)
+                sum += closePrices[i];
+
+        SMA = sum/period;
+        MACD_EMA.push_back(SMA);
+
+        multipler = 2/(period + 1);
+
+        for(int i = period; i <= (closePrices.size() - period); i++) {
+                MACD_EMA.push_back((closePrices[i]-tempEMA[j])*multipler+tempEMA[j]);
+                j++;
+        }
+}
+*/
+
+/*-------------------- START EMAs --------------------*/
 void TechnicalAnalysis::calcFiftyEMA(JSONdata &HistoricalData)
 {
         assert(!HistoricalData.isEmpty());

@@ -19,8 +19,16 @@ std::size_t callback(const char* in, std::size_t size, std::size_t num, std::str
         return totalBytes;
 }
 
+bool IEX::checkProperRange(const std::string &range)
+{
+  if(range == "5y" || range == "2y" || range == "1y" || range == "ytd" || range == "6m" || range == "3m" || range == "1m" || range == "1d")
+    return true;
+
+  return false;
+}
+
 //Use LIBCURL to send the GET requests
-void IEX::sendGetRequest(Json::Value &jsonData, const std::string url)
+void IEX::sendGetRequest(Json::Value &jsonData, const std::string &url)
 {
         CURL* curl = curl_easy_init();
 
@@ -126,7 +134,7 @@ Json::Value IEX::stocks::chart(const std::string &symbol)
 Json::Value IEX::stocks::chartRange(const std::string &symbol, const std::string &range)
 {
         Json::Value jsonData;
-        if(range == "5y" || range == "2y" || range == "1y" || range == "ytd" || range == "6m" || range == "3m" || range == "1m" || range == "1d") {
+        if(checkProperRange(range)) {
                 std::string url(IEX_ENDPOINT);
                 url+="/stock/"+symbol+"/chart/"+range;
                 IEX::sendGetRequest(jsonData, url);
@@ -227,7 +235,7 @@ Json::Value IEX::stocks::delayedQuote(const std::string &symbol)
 Json::Value IEX::stocks::dividends(const std::string &symbol, const std::string &range)
 {
         Json::Value jsonData;
-        if(range == "5y" || range == "2y" || range == "1y" || range == "ytd" || range == "6m" || range == "3m" || range == "1m") {
+        if(checkProperRange(range)) {
                 std::string url(IEX_ENDPOINT);
                 url+="/stock/"+symbol+"/dividends/"+range;
                 IEX::sendGetRequest(jsonData, url);
@@ -738,7 +746,7 @@ Json::Value IEX::stocks::splits(const std::string &symbol, const std::string &ra
         Json::Value jsonData;
         std::string url(IEX_ENDPOINT);
 
-        if(range == "5y" || range == "2y" || range == "1y" || range == "ytd" || range == "6m" || range == "3m" || range == "1m" || range == "1d") {
+        if(checkProperRange(range)) {
                 url += "/stock/"+symbol+"/splits/"+range;
                 IEX::sendGetRequest(jsonData, url);
         }

@@ -11,7 +11,8 @@
 #define IEX_ENDPOINT "https://api.iextrading.com/1.0"
 
 namespace IEX {
-void sendGetRequest(Json::Value &data, const std::string url);
+void sendGetRequest(Json::Value &data, const std::string &url);
+bool checkProperRange(const std::string &);
 namespace stocks {
 Json::Value batch(const std::string &);
 Json::Value book(const std::string &);

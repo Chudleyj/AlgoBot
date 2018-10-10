@@ -24,4 +24,4 @@ Put all the files from this repo into one folder, and have the above mentioned d
 
 Next, run this in your terminal:
 
-g++ *.cpp -std=c++11 -ljsoncpp -lcurl -o exa.out && ./exa.out
+g++ *.cpp -std=c++11 -ljsoncpp -lcurl -o exa.out && ./exa.out -I/usr/local/Cellar/boost/1.67.0_1/include/boost/
