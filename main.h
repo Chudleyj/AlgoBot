@@ -12,7 +12,7 @@
 #include <curl/curl.h>
 #include <thread>
 
-void getAndParseData(JSONdata &, const std::string &, const std::string &);
+void AcquireIEXdata(JSONdata &, const std::string &, const std::string &);
 
 
 #endif
